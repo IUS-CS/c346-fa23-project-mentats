@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 @SpringBootApplication
 @RestController
 public class StategoBackendApplication {
@@ -17,8 +15,13 @@ public class StategoBackendApplication {
 	}
 
 	@GetMapping("/hello")
-    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public String hello() {
       return "hello World";
     }
+
+	@GetMapping("/getUsers")
+	public String getUsers() {
+		return "hi there";
+	}
 
 }
