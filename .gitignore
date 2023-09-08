@@ -216,6 +216,9 @@ nbdist/
 #
 # Recommended template: Node.gitignore
 
+###Javascript###
+Node.JS
+.env
 # TODO: where does this rule come from?
 docs/_book
 
