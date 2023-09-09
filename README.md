@@ -1,5 +1,4 @@
 # [Statego](https://statego.app)
----
 Statego is web based application that allows the user to log their play sessions in board games and recieve aggregate statistical analysis of the data.
 
 ## Installation
