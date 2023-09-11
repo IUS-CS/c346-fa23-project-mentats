@@ -12,7 +12,7 @@ For any board game player who wish to track their playing statistics in a centra
 
 ## Goals of Statego
 
-The Goal of Statego is to offer an easy way for users to log their board game activity and recieve analysis on things such as win rates, who was playing, average playtime, etc. 
+The Goal of Statego is to offer an easy way for users to log their board game activity and recieve analysis on things such as win rates, who was playing, average playtime, etc.
 
 ### Planned Features
  - User Accounts
