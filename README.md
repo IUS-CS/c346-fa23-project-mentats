@@ -1,3 +1,48 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/aFlCsMXD)
+# [Statego](https://statego.app)
+Statego is web based application that allows the user to log their play sessions in board games and recieve aggregate statistical analysis of the data.
 
-![image](https://github.com/IUS-CS/c346-fa23-project-mentats/assets/104334868/974f2937-f95b-4f6d-a23b-e0ab1b0ff568)
+## Installation
+### Dependencies
+- Node.JS
+- Gradle
+
+### Backend
+```bash
+#Move to backend folder
+cd statego-backend
+
+#Run Gradle 
+gradlew run
+```
+
+### Frontend
+```bash
+#Move to frontend folder
+cd statego-frontend/
+
+#Install npm packages
+npm i
+
+#Start frontend
+npm run dev
+```
+
+## Tools Used
+
+### Frontend
+| Tool        |Purpose              |
+| ----------- | ------------------- |
+| Vuejs       | JS Framework        |
+| Pinia       | State Mangement     |
+| TailwindCSS | CSS Styling         |
+| Vercel      | Hosting the Fronted |
+
+### Backend 
+| Tool       | Purpose                |
+| ---------- | ---------------------- |
+| SpringBoot | Java Backend Framework |
+| Gradle     | Build Tool             |
+| Linode     | Backend Server hosting |
+
+## License 
+Statego is licensed under the [MIT](https://choosealicense.com/licenses/mit/) license
