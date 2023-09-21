@@ -20,7 +20,7 @@ This sprint, we completed:
 
 Here are screenshots of what we did:
 
-![Home page](/doc/images/Home1.png)
+![Home page](doc/images/Home1.PNG)
 ![Landing page](/doc/images/Home2.png?raw=true)
 ![About](/doc/images/About1.png?raw=true)
 ![Reaching the about page](/doc/images/About2.png?raw=true)
