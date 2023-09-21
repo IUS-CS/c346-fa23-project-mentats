@@ -22,8 +22,8 @@ Here are screenshots of what we did:
 
 ![Home page](/doc/images/Home1.PNG)
 ![Landing page](/doc/images/Home2.PNG)
-![About](/doc/images/About1.png?raw=true)
-![Reaching the about page](/doc/images/About2.png?raw=true)
+![About](/doc/images/About1.PNG)
+![Reaching the about page](/doc/images/About2.PNG)
 
 ## Retro
 
