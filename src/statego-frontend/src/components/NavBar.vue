@@ -9,7 +9,7 @@
 
         <RouterLink class="p-5 hover:bg-slate-900 text-white" to="/">Home</RouterLink>
         <RouterLink class="p-5 hover:bg-slate-900 text-white" to="/about">About</RouterLink>
-        
+        <RouterLink class="p-5 hover:bg-slate-900 text-white" to="/logsession">Log Session</RouterLink>
     </nav>
 
 

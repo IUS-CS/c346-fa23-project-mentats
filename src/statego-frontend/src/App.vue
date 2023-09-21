@@ -10,7 +10,6 @@ import NavBar from './components/NavBar.vue'
   <div class="flex w-full bg-slate-300 h-screen">
     <RouterView  />
   </div>
-  
 </template>
 
 <style scoped>
