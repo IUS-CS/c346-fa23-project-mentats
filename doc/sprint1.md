@@ -1,6 +1,6 @@
-# Sprint Ceremony Minutes
+# Sprint 1 Ceremony Minutes
   
-Date: 2020-09-21
+Date: 2023-09-21
 
 Members present:
 
@@ -20,10 +20,10 @@ This sprint, we completed:
 
 Here are screenshots of what we did:
 
-![Home page](/doc/images/home1.png?raw=true)
-![Landing page](/doc/images/home2.png?raw=true)
-![About](/doc/images/about1.png?raw=true)
-![Reaching the about page](/doc/about2/home2.png?raw=true)
+![Home page](/doc/images/Home1.png?raw=true)
+![Landing page](/doc/images/Home2.png?raw=true)
+![About](/doc/images/About1.png?raw=true)
+![Reaching the about page](/doc/images/About2.png?raw=true)
 
 ## Retro
 
@@ -31,24 +31,24 @@ Here are screenshots of what we did:
 
 ### Linux(Good)
 
-* Productive in-person meetings.
-* Good planning
+* Productive in-person meetings
+* Clear planning
 * Good communication over discord
-* Good relationships with everyone on the team.
+* Good relationships with everyone on the team
 
 ### Windows(Bad)
 
 * New technologies have to be learned, such as SpringBoot.
-* Having to depenbd on Java
+* Having to depend on Java
 * Potential feature creep
 * Planning in the middle of the sprint versus the begining
 
 ### Mac(Actionable Commitments)
 
-* As a team, we will...
-* Keep the weekly meetings.
-* Prioritize learning technologies needed for the sprint.
-* Divide user stories into more specific components.
+
+* As a team we'll continue the weekly meetings.
+* As a team we'll prioritize learning technologies needed for the sprint.
+* As a team we'll divide user stories into more specific components.
 
 ## Planning
 
@@ -56,5 +56,9 @@ Here are screenshots of what we did:
 
 Points | Story
 -------|--------
-5      | As a user, I want...
-8      | As an administrator, I want... so I can ...
+3      | As a user, I would like a sign up form for the app.
+2      | As a user, I would like a login form for the app.
+5      | As a user, I would like to a well designed home page after opening the app.
+6      | As a user, I would like to be able to login after connecting to the app.
+10      | As a user, I would like to change my login details, and have my login details persist as I'm using the app.
+
