@@ -13,9 +13,9 @@ Members present:
 
 This sprint, we completed:
 
-* Neccessary documents includeing the: README, LICENSE, AUTHORS, proposal, and gitignore files.
+* Necessary documents including the: README, LICENSE, AUTHORS, proposal, and gitignore files.
 * Secured hosting for the web app.
-* A prototype landing page for the app, The landing page titled "Home" will provide a base for reachiing other parts of the app. 
+* A prototype landing page for the app, The landing page titled "Home" will provide a base for reaching other parts of the app. 
 * An "About" page that is reachable from "Home". The about page demonstrates how other parts of the app may be reached.
 
 Here are screenshots of what we did:
@@ -26,8 +26,6 @@ Here are screenshots of what we did:
 ![Reaching the about page](/doc/images/About2.PNG)
 
 ## Retro
-
-[What is a Sprint Retrospective](https://www.scrum.org/resources/what-is-a-sprint-retrospective)
 
 ### Linux(Good)
 
@@ -41,7 +39,7 @@ Here are screenshots of what we did:
 * New technologies have to be learned, such as SpringBoot.
 * Having to depend on Java
 * Potential feature creep
-* Planning in the middle of the sprint versus the begining
+* Planning in the middle of the sprint versus the beginning.
 
 ### Mac(Actionable Commitments)
 
@@ -56,9 +54,9 @@ Here are screenshots of what we did:
 
 Points | Story
 -------|--------
-3      | As a user, I would like a sign up form for the app.
+3      | As a user, I would like a sign-up form for the app.
 2      | As a user, I would like a login form for the app.
-5      | As a user, I would like to a well designed home page after opening the app.
-6      | As a user, I would like to be able to login after connecting to the app.
+5      | As a user, I would like a well designed home page after opening the app.
+6      | As a user, I would like to login after connecting to the app.
 10      | As a user, I would like to change my login details, and have my login details persist as I'm using the app.
 
