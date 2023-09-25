@@ -1,5 +1,6 @@
 package com.Mentats.Repositories;
 
+//These imports are for custom method implementation.
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,7 +13,8 @@ import java.util.Date;
 //Domain repositories extending this interface can selectively expose CRUD methods by simply declaring methods of the
 // same signature as those declared in CrudRepository.
 import org.springframework.data.jpa.repository.JpaRepository;
-
+//list of methods inherited from other repository and CRUD repository methods can be found here"
+//https://docs.spring.io/spring-data/jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html
 import com.Mentats.Entities.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
