@@ -1,36 +1,50 @@
 <script setup lang="ts">
-    let imgAlt: String = "Game Board"
+import PlayerList from '@/components/PlayerList.vue'
+import { ref, onMounted } from 'vue'
+import type { Ref } from 'vue'
+let imgAlt: Ref<string> = ref('Game Board')
+
+const playersList: Array<String> = [
+  'John Brown',
+  'Tyler Popson',
+  'Mason Napper',
+  'Zachary Nelson',
+  'John Brown',
+  'Tyler Popson',
+  'Mason Napper',
+  'Zachary Nelson'
+]
+
+onMounted(() => {})
 </script>
 
 <template>
-    <div class="flex w-5/6 h-full bg-white">
-        <!-- left col -->
-        <div class="flex flex-col w-2/5 h-full items-center justify-center gap-16">
-            <!-- images from session -->
-            <div class="w-4/5 h-2/5">
-                <img class="flex" :alt="imgAlt" src="https://placehold.co/600x400"/>
-            </div>
-            <!-- time and name -->
-            <div class="w-4/5 h-2/5">
-                <h1>Game Name</h1>
-                <h2>Campeign</h2>
-                <p>Date/Time</p>
-                <p>Length</p>
-            </div>
-        </div>
-
-        <!-- right col -->
-        <div class="flex flex-col w-3/5 h-full items-center justify-center gap-16">
-            <!-- players / winner -->
-            <div class="w-4/5 h-2/5">
-
-            </div>
-            <!-- session notes -->
-            <div class="w-4/5 h-2/5">
-
-            </div>
-        </div>
+  <div class="flex flex-col md:flex-row w-5/6 h-full bg-gray-200">
+    <!-- left col -->
+    <div class="flex flex-col md:w-2/5 h-full items-center justify-center gap-16 rounded-t-2xl">
+      <!-- images from session -->
+      <div class="w-4/5 h-2/5">
+        <img class="flex" :alt="imgAlt" src="https://placehold.co/600x400" />
+      </div>
+      <!-- time and name -->
+      <div class="w-4/5 h-2/5">
+        <h1 class="text-4xl">Game Name</h1>
+        <h2 class="text-3xl">Campeign</h2>
+        <p class="text-lg">Date/Time</p>
+        <p class="text-lg">Length</p>
+      </div>
     </div>
+
+    <!-- right col -->
+    <div class="flex flex-col md:w-3/5 h-full items-center justify-center gap-16">
+      <!-- players / winner -->
+      <div class="w-4/5 h-2/5">
+        <PlayerList :players="playersList" />
+      </div>
+      <!-- session notes -->
+      <div class="w-4/5 h-2/5"></div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
