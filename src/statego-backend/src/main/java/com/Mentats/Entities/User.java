@@ -1,13 +1,11 @@
 package com.Mentats;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.util.Date;
 
 
 @Entity // This tells Hibernate to make a table out of this class
+@Table(name = "userTable")
 public class User {
     //Unique ID is automatically generated with the following annotations
     @Id
@@ -15,22 +13,29 @@ public class User {
     private Integer id;
 
     //contains the userName of the User
+    @Column(name = "Username")
     private String userName;
 
     //contains the associated email of the User
+    @Column(name = "Email")
     private String email;
 
     //contains the private password of the User
+    @Column(name = "Password")
     private String password;
 
     //denotes whether the User is "enabled" (will be expanded later)
+    @Column(name = "Enabled Status")
     private Boolean enabledStatus;
 
     //contains information on the last date that the user logged in
+    @Column(name = "Last Login")
     private Date lastLogin;
 
+    //no arg constructor required for JPA
+    public User(){
 
-
+    }
     //getter setter methods for all variables
     public Integer getId() {
         return id;
