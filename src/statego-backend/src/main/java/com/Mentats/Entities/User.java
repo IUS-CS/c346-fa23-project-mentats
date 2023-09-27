@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 @Entity // This tells Hibernate to make a table out of this class
-@Table(name = "userTable")
+@Table(name = "User Table")
 public class User {
     //Unique ID is automatically generated with the following annotations
     @Id
@@ -31,6 +31,18 @@ public class User {
     //contains information on the last date that the user logged in
     @Column(name = "Last Login")
     private Date lastLogin;
+
+    //contains information on the date of account creation
+    @Column(name = "First Logged In")
+    private Date firstLogin;
+
+    //contains a public user generated biography of the User
+    @Column(name = "Biography")
+    private String biography;
+
+    //contains a link to a profile picture for the User
+    @Column(name = "Profile Picture Link")
+    private String profilePicLink;
 
     //no arg constructor required for JPA
     public User(){
@@ -79,7 +91,29 @@ public class User {
         this.lastLogin = LastLogin;
     }
 
+    public Date getFirstLogin() {
+        return firstLogin;
+    }
 
+    public void setFirstLogin(Date firstLogin) {
+        this.firstLogin = firstLogin;
+    }
+
+    public String getBiography() {
+        return biography;
+    }
+
+    public void setBiography(String biography) {
+        this.biography = biography;
+    }
+
+    public String getProfilePicLink() {
+        return profilePicLink;
+    }
+
+    public void setProfilePicLink(String profilePicLink) {
+        this.profilePicLink = profilePicLink;
+    }
 
 
 
