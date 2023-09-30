@@ -19,7 +19,7 @@ onMounted(() => {})
 </script>
 
 <template>
-  <div class="flex flex-col md:flex-row w-5/6 h-full bg-gray-200">
+  <div class="flex flex-col md:flex-row w-5/6 h-full bg-zinc-100 drop-shadow-3lg">
     <!-- left col -->
     <div class="flex flex-col md:w-2/5 h-full items-center justify-center gap-16 rounded-t-2xl">
       <!-- images from session -->
