@@ -4,6 +4,8 @@ import AboutView from '../views/AboutView.vue'
 import SessionView from '../views/SessionView.vue'
 import LogSessionView from '../views/LogSessionView.vue'
 import SignupForm from '../components/SignupForm.vue'
+import LogInViewVue from '@/views/LogInView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,21 +22,24 @@ const router = createRouter({
       name: 'About',
       component: AboutView
     },
-    {
-      path: '/session',
-      name: 'Session',
-      component: SessionView
-    },
+    //route to Session Log page
     {
       path: '/logsession',
       name: 'LogSession',
       component: LogSessionView
+    },
+    //route to Login page
+    {
+      path: '/login',
+      name: 'LogIn',
+      component: LogInViewVue
     },
     {
       path: '/signup',
       name: 'Signup',
       component: SignupForm
     }
+                           
   ]
 })
 
