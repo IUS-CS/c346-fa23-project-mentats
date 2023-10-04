@@ -21,8 +21,8 @@ This sprint, we completed:
 
 Here are screenshots of what we did:
 
-![Form View](/doc/images/SessionView.png?raw=true)
-![Form](/doc/images/Statego3.png?raw=true)
+![Form View](/doc/images/SessionView.PNG?raw=true)
+![Form](doc/images/Statego3.PNG?raw=true)
 
 ## Retro
 
