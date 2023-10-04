@@ -4,15 +4,15 @@ Statego is web based application that allows the user to log their play sessions
 ## Installation
 ### Dependencies
 - Node.JS
-- Gradle
+- Maven
 
 ### Backend
 ```bash
 #Move to backend folder
 cd statego-backend
 
-#Run Gradle 
-gradlew run
+#Run Maven 
+Maven run
 ```
 
 ### Frontend
@@ -41,7 +41,7 @@ npm run dev
 | Tool       | Purpose                |
 | ---------- | ---------------------- |
 | SpringBoot | Java Backend Framework |
-| Gradle     | Build Tool             |
+| Maven     | Build Tool             |
 | Linode     | Backend Server hosting |
 
 ## License 

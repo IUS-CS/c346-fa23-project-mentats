@@ -162,4 +162,5 @@ function addPlayer() {}
 .show {
   display: block;
 }*/
+
 </style>
