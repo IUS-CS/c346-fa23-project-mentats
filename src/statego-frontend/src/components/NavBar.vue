@@ -10,3 +10,4 @@ import { RouterLink } from 'vue-router'
     <RouterLink class="p-5 hover:bg-slate-900 text-white" to="/login">Login</RouterLink>
   </nav>
 </template>
+

@@ -4,6 +4,8 @@ import AboutView from '../views/AboutView.vue'
 import LogSessionView from '../views/LogSessionView.vue'
 import LogInViewVue from '@/views/LogInView.vue'
 
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
