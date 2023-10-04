@@ -84,7 +84,7 @@ function addPlayer() {}
             class="hover:shadow-md rounded-md bg-gray-50 border-2 border-solid border-gray-400 p-1"
             onchange="yesorno(this.value)"
           >
-            <option value="Choose" selected="selected">Y/N</option>
+            <option value="Choose" selected="true">Y/N</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </select>
