@@ -1,4 +1,4 @@
-# Sprint 1 Ceremony Minutes
+# Sprint 0 Ceremony Minutes
   
 Date: 2023-09-21
 
