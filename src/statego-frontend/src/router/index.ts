@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LandingView from '../views/LandingView.vue'
 import AboutView from '../views/AboutView.vue'
+import SessionView from '../views/SessionView.vue'
 import LogSessionView from '../views/LogSessionView.vue'
+import SignupForm from '../components/SignupForm.vue'
 import LogInViewVue from '@/views/LogInView.vue'
-
 
 
 const router = createRouter({
@@ -32,7 +33,13 @@ const router = createRouter({
       path: '/login',
       name: 'LogIn',
       component: LogInViewVue
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: SignupForm
     }
+                           
   ]
 })
 
