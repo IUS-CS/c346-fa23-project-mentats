@@ -25,29 +25,6 @@ Here are screenshots of what we did:
 ![About](/doc/images/About1.PNG)
 ![Reaching the about page](/doc/images/About2.PNG)
 
-## Retro
-
-### Linux(Good)
-
-* Productive in-person meetings
-* Clear planning
-* Good communication over discord
-* Good relationships with everyone on the team
-
-### Windows(Bad)
-
-* New technologies have to be learned, such as SpringBoot.
-* Having to depend on Java
-* Potential feature creep
-* Planning in the middle of the sprint versus the beginning.
-
-### Mac(Actionable Commitments)
-
-
-* As a team we'll continue the weekly meetings.
-* As a team we'll prioritize learning technologies needed for the sprint.
-* As a team we'll divide user stories into more specific components.
-
 ## Planning
 
 (This section can and should be completed in your GitHub projects, but please summarize here)
