@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LandingView from '../views/LandingView.vue'
 import AboutView from '../views/AboutView.vue'
-import SessionView from '../views/SessionView.vue'
-import LogSessionView from '../views/LogSessionView.vue';
+import LogSessionView from '../views/LogSessionView.vue'
+import LogInViewVue from '@/views/LogInView.vue'
+
 
 
 const router = createRouter({
@@ -20,17 +21,19 @@ const router = createRouter({
       name: 'About',
       component: AboutView
     },
+    //route to Session Log page
     {
-      path: '/session',
-      name: 'Session',
-      component: SessionView
+      path: '/logsession',
+      name: 'LogSession',
+      component: LogSessionView
     },
+    //route to Login page
     {
-       path: '/logsession',
-       name: 'LogSession',
-       component: LogSessionView
-     },
-   ]
+      path: '/login',
+      name: 'LogIn',
+      component: LogInViewVue
+    }
+  ]
 })
 
 export default router
