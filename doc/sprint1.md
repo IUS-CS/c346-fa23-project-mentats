@@ -1,4 +1,4 @@
-# Sprint 2 Ceremony Minutes
+# Sprint 1 Ceremony Minutes
   
 Date: 2023-10-03
 
