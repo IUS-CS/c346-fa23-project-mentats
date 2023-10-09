@@ -4,15 +4,16 @@ Statego is web based application that allows the user to log their play sessions
 ## Installation
 ### Dependencies
 - Node.JS
-- Maven
+- Rust
+- Cargo
 
 ### Backend
 ```bash
 #Move to backend folder
-cd statego-backend
+cd src/statego-backend/
 
 #Run Maven 
-Maven run
+cargo run
 ```
 
 ### Frontend
@@ -38,11 +39,11 @@ npm run dev
 | Vercel      | Hosting the Fronted |
 
 ### Backend 
-| Tool       | Purpose                |
-| ---------- | ---------------------- |
-| SpringBoot | Java Backend Framework |
-| Maven     | Build Tool             |
-| Linode     | Backend Server hosting |
+| Tool       | Purpose                        |
+| ---------- | ------------------------------ |
+| Actic-Web  | Rust Backend Framework         |
+| Cargo      | Build Tool and package manager |
+| Linode     | Backend Server hosting         |
 
 ## License 
 Statego is licensed under the [MIT](https://choosealicense.com/licenses/mit/) license
