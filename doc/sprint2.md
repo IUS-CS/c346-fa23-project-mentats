@@ -13,11 +13,10 @@ Members present:
 
 This sprint, we completed:
 
-* A prototype session log for the app that includes file upload.
-* A session view page for the app.
-* An entity model for a log about a completed game.
-* A user model representation with a profile picture link.
-* A transition from Gradle to Maven for the Java Backend.
+* Added a dependency for mySQL
+* A signup feature for creating users on the database.
+* A login feature to authenticate users on a database.
+* A transition from Maven to Actix for the Rust Backend.
 
 Here are screenshots of what we did:
 
