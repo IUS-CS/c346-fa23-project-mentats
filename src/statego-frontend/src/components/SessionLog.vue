@@ -1,166 +1,152 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Ref } from 'vue'
-let gameName: Ref<string> = ref('')
-let playerName1: Ref<String> = ref('')
-let playerName2: Ref<String> = ref('')
-let winnerName: Ref<String> = ref('')
-let description: Ref<String> = ref('')
+import { ref } from 'vue';
+import type { Ref } from 'vue';
+let gameName: Ref<string> = ref('');
+let playerName1: Ref<String> = ref('');
+let playerName2: Ref<String> = ref('');
+let winnerName: Ref<String> = ref('');
+let description: Ref<String> = ref('');
 function addPlayer() {}
 </script>
 
 <template>
-  <div
-    class="flex flex-col w-2/5 h-4/5 bg-gray-100 rounded-lg drop-shadow-2xlshadow-2xl border-t-indigo-500 border-t-8 pt-12 pb-12"
-  >
-    <form class="flex flex-co w-full h-full pb-2 pt-2">
-      <div class="flex flex-col w-full h-full items-center justify-center">
-        <!-- headings -->
-        <h1 class="flex text-2xl font-bold w-full justify-center pb-4">Session Log</h1>
-        <form>
-          <label class="text-md font-semibold" for="gameName">Game name </label>
-          <input
-            class="hover:bg-gray-100 rounded-md bg-gray-50 border-2 border-gray-400 border-solid p-1 italic text-lg text-center"
-            v-model="gameName"
-          />
-        </form>
+   <div class="drop-shadow-2xlshadow-2xl flex h-fit w-3/5 flex-col justify-center rounded-lg border-t-8 border-t-indigo-500 bg-gray-100 pb-12 pt-12">
+      <h1 class="flex w-full justify-center pb-5 font-Nunito-Sans text-2xl font-bold">Session Log</h1>
+      <div class="flex h-full w-full flex-row">
+         <div class="flex h-full w-2/3 flex-col pl-20 pr-20">
+            <p class="pb-3 pl-2 pt-4 font-Nunito-Sans text-lg font-semibold">Game name</p>
+            <p class="pb-16 pl-2 font-Nunito-Sans text-lg font-semibold">Start</p>
+            <p class="pb-16 pl-2 pt-1 font-Nunito-Sans text-lg font-semibold">End</p>
+            <p class="pb-6 pl-2 pt-1 font-Nunito-Sans text-lg font-semibold">Player 1</p>
+            <p class="pb-5 pl-2 font-Nunito-Sans text-lg font-semibold">Player 2</p>
+            <p class="pb-5 pl-2 font-Nunito-Sans text-lg font-semibold">Complete?</p>
+            <p class="pb-5 pl-2 font-Nunito-Sans text-lg font-semibold">Winner</p>
+            <p class="pb-16 pl-2 font-Nunito-Sans text-lg font-semibold">Last Session of Campaign</p>
+            <p class="pb-20 pl-2 font-Nunito-Sans text-lg font-semibold">Description</p>
+            <p class="pl-2 pt-7 font-Nunito-Sans text-lg font-semibold">Image</p>
+         </div>
 
-        <!-- date and time started label and calendar -->
-        <form class="flex pb-2 pt-2">
-          <label class="text-md font-semibold p-2" for="dateStarted">Start</label>
-          <input
-            class="hover:shadow-md rounded-md bg-gray-50 border-2 border-gray-400 border-solid"
-            type="date"
-            id="dateStarted"
-            name="dateStarted"
-          />
-          <legend class="text-md font-semibold">
-            <input
-              class="hover:shadow-md rounded-md bg-gray-50 border-2 border-gray-400 border-solid p-1.5"
-              type="time"
-              name="startTime"
-            />
-          </legend>
-        </form>
+         <div class="flex h-full w-2/3 flex-col pl-20 pr-2 pt-1">
+            <form class="flex h-full w-fit flex-col">
+               <!-- game name -->
+               <div class="pb-3 pr-3">
+                  <input class="font-Nunito-Sans italic rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 text-center hover:bg-gray-100 pr-3" v-model="gameName" />
+               </div>
+               <!-- date and time started -->
+               <div class="flex flex-col pb-3">
+                  <div class="pb-3 pr-3">
+                     <input
+                        class="rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 pl-6 pr-10 font-Nunito-Sans font-semibold hover:shadow-md"
+                        type="date"
+                        id="dateStarted"
+                        name="dateStarted"
+                     />
+                  </div>
 
-        <!-- date and time ended label and calendar -->
-        <form class="flex pb-2 pt-2">
-          <label class="text-md font-semibold p-2" for="dateEnded">End</label>
-          <input
-            class="hover:shadow-md rounded-md bg-gray-50 border-2 border-gray-400 border-solid"
-            type="date"
-            id="dateEnded"
-            name="dateEnded"
-          />
-          <legend class="text-md font-semibold">
-            <input
-              class="hover:shadow-md rounded-md bg-gray-50 border-2 border-gray-400 border-solid p-1.5"
-              type="time"
-              name="endTime"
-            />
-          </legend>
-        </form>
+                  <legend class="text-md font-semibold">
+                     <input
+                        class="rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 pl-10 pr-14 font-Nunito-Sans hover:shadow-md"
+                        type="time"
+                        name="startTime"
+                     />
+                  </legend>
+               </div>
 
-        <!-- player names labels and text boxes -->
-        <form class="pb-2 pt-2">
-          <label class="text-md font-semibold pb-2 pt-2 pr-2" for="playerName1">Player 1</label>
-          <input
-            class="hover:bg-gray-100 rounded-md bg-gray-50 border-2 border-gray-400 border-solid p-1 text-center"
-            v-model="playerName1"
-          />
-          <label class="text-md font-semibold pb-2 pt-2 pr-2 pl-2" for="playerName2"
-            >Player 2</label
-          >
-          <input
-            class="hover:bg-gray-100 rounded-md bg-gray-50 border-2 border-gray-400 border-solid p-1 text-center"
-            v-model="playerName2"
-          /><br />
-        </form>
+               <!-- date and time ended -->
+               <div class="flex flex-col pb-3">
+                  <div class="pb-3 pr-3">
+                     <input
+                        class="rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 pl-6 pr-10 font-Nunito-Sans font-semibold hover:shadow-md"
+                        type="date"
+                        id="dateEnded"
+                        name="dateEnded"
+                     />
+                  </div>
+                  <legend class="text-md font-semibold">
+                     <input
+                        class="rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 pl-10 pr-14 font-Nunito-Sans hover:shadow-md"
+                        type="time"
+                        name="endTime"
+                     />
+                  </legend>
+               </div>
 
-        <!-- dropdown menu asking if game was completed with winner's name textbox -->
-        <form class="pb-2 pt-2">
-          <label class="text-md font-semibold pl-2 pr-2" for="yesorno">Complete?</label>
-          <select
-            class="hover:shadow-md rounded-md bg-gray-50 border-2 border-solid border-gray-400 p-1"
-            onchange="yesorno(this.value)"
-          >
-            <option value="Choose" selected="true">Y/N</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
-          </select>
-          <label class="text-md font-semibold p-2" for="winner">Winner</label>
-          <input
-            class="hover:bg-gray-100 rounded-md bg-gray-50 border-2 border-gray-400 border-solid p-1 text-center"
-            v-model="winnerName"
-          />
-        </form>
+               <!-- player name text boxes -->
+               <div class="flex pb-3">
+                  <input
+                     class="font-Nunito-Sans rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 text-center hover:bg-gray-100 pr-3"
+                     v-model="playerName1"
+                  />
+               </div>
+               <div class="flex pb-3">
+                  <input
+                     class="font-Nunito-Sans rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 text-center hover:bg-gray-100 pr-3"
+                     v-model="playerName2"
+                  />
+               </div>
 
-        <!-- last session played calendar and timePicker -->
-        <form class="flex pb-2 pt-2">
-          <label class="text-md font-semibold p-2" for="lastSession"
-            >Last session of campaign
-          </label>
-          <input
-            class="hover:shadow-md rounded-md bg-gray-50 border-2 border-gray-400 border-solid"
-            type="date"
-            id="lastSession"
-            name="lastSession"
-          />
-          <legend>
-            <input
-              class="hover:shadow-md rounded-md bg-gray-50 border-2 border-gray-400 border-solid p-1.5"
-              type="time"
-              name="startTime"
-            />
-          </legend>
-        </form>
+               <!-- yes or no dropdown -->
+               <div class="pb-3">
+                  <select class="font-Nunito-Sans rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 hover:shadow-md" onchange="yesorno(this.value)">
+                     <option value="Choose" selected="true">Y/N</option>
+                     <option value="yes">Yes</option>
+                     <option value="no">No</option>
+                  </select>
+               </div>
 
-        <!-- description text box -->
-        <form class="pb-2 pt-2">
-          <label class="align-top text-md font-semibold p-2" for="description">Description </label>
-          <textarea
-            class="hover:shadow-md rounded-md bg-gray-50 border-2 border-gray-400 border-solid pb-22 pr-32"
-            id="descriptionText"
-            name="descriptionText"
-          ></textarea>
-        </form>
+               <!-- winner textbox -->
+               <div class="pb-3">
+                  <input class="font-Nunito-Sans rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 text-center hover:bg-gray-100 pr-3" v-model="winnerName" />
+               </div>
 
-        <!-- image upload -->
-        <div class="flex flex-col justify-center items-center">
-          <form class="p-2">
-            <input
-              class=" file:hover:shadow-md file:hover:bg-gray-100 pb-4 file:rounded-md file:p-1 file:bg-gray-50 file:border-gray-400 file:border-2 file:border-solid"
-              type="file"
-              name="pictureUpload"
-              accept="image/*"
-            />
-          </form>
-        </div>
+               <!-- date and time of last session  -->
+               <div class="flex flex-col pb-3">
+                  <div class="pb-3 pr-3">
+                     <input
+                        class="rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 pl-6 pr-10 font-Nunito-Sans font-semibold hover:shadow-md"
+                        type="date"
+                        id="lastSession"
+                        name="lastSession"
+                     />
+                  </div>
+                  <legend>
+                     <input
+                        class="rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 pl-10 pr-14 font-Nunito-Sans font-semibold hover:shadow-md"
+                        type="time"
+                        name="lastTime"
+                     />
+                  </legend>
+               </div>
 
-        <!-- submit button -->
-        <button
-          class="justify-center items-center flex w-1/4 h-14 text-xl bg-indigo-500 rounded-md shadow-md font-bold hover:shadow-lg hover:text-white"
-          type="submit"
-          value="Submit"
-        >
-          Submit
-        </button>
+               <!-- description textbox -->
+               <div class="pb-3">
+                  <textarea
+                     class="font-Nunito-Sans rounded-md border-2 border-solid border-gray-400 bg-gray-50 pb-16 pr-3 hover:shadow-md"
+                     id="descriptionText"
+                     name="descriptionText"
+                  ></textarea>
+               </div>
+
+               <!-- image upload button -->
+               <input
+                  class="font-Nunito-Sans pb-4 file:rounded-md file:border-2 file:border-solid file:border-gray-400 file:bg-gray-50 file:p-1 file:hover:bg-gray-100 file:hover:shadow-md"
+                  type="file"
+                  name="pictureUpload"
+                  accept="image/*"
+               />
+
+               <!-- submit button -->
+               <div class="pt-10">
+                  <button
+                     class="flex h-10 w-1/4 items-center justify-center rounded-md bg-indigo-500 pl-16 pr-16 font-Nunito-Sans text-xl font-bold shadow-md hover:text-white hover:shadow-lg"
+                     type="submit"
+                     value="Submit"
+                  >
+                     Submit
+                  </button>
+               </div>
+            </form>
+         </div>
       </div>
-    </form>
-  </div>
+   </div>
 </template>
-
-<style scoped>
-/* div {
-  outline: 4px;
-  outline-color: rgb(0, 0, 0);
-  outline-style: solid;
-}
-.hide {
-  display: none;
-}
-.show {
-  display: block;
-}*/
-
-</style>

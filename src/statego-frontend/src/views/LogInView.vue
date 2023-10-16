@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import logIn from '../components/LogIn.vue'
+import logIn from '../components/LogIn.vue';
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-full items-center justify-center">
-    <logIn />
-  </div>
+   <div class="flex h-full w-full flex-col items-center justify-center">
+      <logIn />
+   </div>
 </template>

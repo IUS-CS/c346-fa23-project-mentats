@@ -57,7 +57,7 @@ function submit() {
             </button>
             <p class="pt-2 font-Nunito-Sans text-sm">
                Already have an account?
-               <RouterLink class="text-violet-400 underline" to="/"> Login! </RouterLink>
+               <RouterLink class="text-violet-400 underline" to="/login"> Login! </RouterLink>
             </p>
          </div>
       </form>
