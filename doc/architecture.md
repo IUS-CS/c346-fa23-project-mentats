@@ -5,6 +5,7 @@ The reverse proxy performs load balancing by creating backend instances to handl
 Backend Instances can be created and terminated as needed.
 
 ![Sequence UML](images/SeqUML.png)
+![Additional Sequence UML](images/SeqUML2.png)
 In the backend representation below, the models class is used by multiple classes for authentication and account info.
 Translating HTTP requests are by the routes class into mySQL. The persistence class performs error handling for these requests. 
 The Query class performs the querying and returns any results back to the controller.
