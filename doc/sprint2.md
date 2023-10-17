@@ -21,8 +21,8 @@ This sprint, we completed:
 
 Here are screenshots of what we did:
 
-![Form View](/doc/images/Login1.PNG)
-![Form](images/SessionLog2.PNG)
+![Login form](images/Login1.PNG)
+!![Session form](images/SessionLog2.PNG)
 
 ## Retro
 
