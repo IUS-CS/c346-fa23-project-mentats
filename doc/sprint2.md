@@ -17,11 +17,12 @@ This sprint, we completed:
 * A signup feature for creating users on the database.
 * A login feature to authenticate users on a database.
 * A transition from Maven to Actix for the Rust Backend.
+* A redesign of the Session log page.
 
 Here are screenshots of what we did:
 
-![Form View](/doc/images/SessionView.PNG?raw=true)
-![Form](images/Statego3.PNG?raw=true)
+![Form View](/doc/images/Login1.PNG)
+![Form](images/SessionLog2.PNG)
 
 ## Retro
 
