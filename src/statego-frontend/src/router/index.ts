@@ -3,7 +3,7 @@ import LandingView from '../views/LandingView.vue';
 import AboutView from '../views/AboutView.vue';
 import SessionView from '../views/SessionView.vue';
 import LogSessionView from '../views/LogSessionView.vue';
-import SignupForm from '../components/SignupForm.vue';
+import SignupView from '../views/SignupView.vue';
 import LogInViewVue from '@/views/LogInView.vue';
 
 const router = createRouter({
@@ -36,7 +36,7 @@ const router = createRouter({
       {
          path: '/signup',
          name: 'Signup',
-         component: SignupForm,
+         component: SignupView,
       },
    ],
 });
