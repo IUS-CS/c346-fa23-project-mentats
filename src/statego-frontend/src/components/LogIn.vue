@@ -50,7 +50,7 @@ function togglePass() {
 
             <p class="justify-left w-4/5 pt-4 font-Nunito-Sans text-xs">
                Don't have an account yet?
-               <a class="text-indigo-400 underline hover:text-indigo-600" href="/signup">Sign Up!</a>
+               <RouterLink class="text-violet-400 underline" to="/signup"> Sign Up! </RouterLink>
             </p>
          </div>
       </form>
