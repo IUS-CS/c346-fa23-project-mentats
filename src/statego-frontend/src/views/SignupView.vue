@@ -4,6 +4,6 @@ import SignupForm from '@/components/SignupForm.vue';
 
 <template>
    <div class="flex h-full w-full items-center justify-center">
-      <SignupView />
+      <SignupForm />
    </div>
 </template>
