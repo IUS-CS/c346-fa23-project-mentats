@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import NavBar from './components/NavBar.vue';
+import NavBar from './components/NavBar-Desktop.vue';
 </script>
 
 <template>
-   <header class="h-15 fixed top-0 flex w-full bg-slate-700">
+   <header class="fixed left-0 flex h-full w-20 bg-black">
       <NavBar />
    </header>
-   <div class="flex h-screen items-center justify-center bg-gray-300 pt-16">
+   <div class="flex h-screen items-center justify-center bg-gray-300 pl-20">
       <RouterView />
    </div>
 </template>
