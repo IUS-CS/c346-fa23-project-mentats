@@ -108,3 +108,15 @@ pub fn get_users_verify(pool: &mysql::Pool) -> Result<UserResponseData, Persiste
         user_data: select_all_users(&mut conn)?,
     })
 }
+
+
+//function that checks if user exists and calls the query to update
+pub fn update_user(
+    pool: &mysql::Pool,
+    username: String,
+    bio: String,
+    profile_pic: String
+
+) -> Result<(), PersistenceError> {
+    
+}

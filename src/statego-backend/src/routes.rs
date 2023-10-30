@@ -10,7 +10,7 @@ use actix_web::{get, post, put, web, HttpResponse, Responder};
 
 // import models and functions from other files
 use crate::{
-    models::{UserCredentials, UserDetails},
+    models::{UserCredentials, UserDetails,UserUpdate},
     persistence::{create_user_verify, get_users_verify, login_user_verify},
 };
 
@@ -58,5 +58,24 @@ pub(crate) async fn login(
     let password = user_data.pass;
 
     let user = web::block(move || login_user_verify(&data, username, password)).await??;
+
     Ok(web::Json(user))
+}
+
+// endpoint for creating a new user
+#[post("/v1/users/profile")]
+pub(crate) async fn update_user_profile(
+    web::Json(user_data): web::Json<UserUpdate>,
+    data: web::Data<mysql::Pool>,
+) -> actix_web::Result<impl Responder> {
+    // extract data from json
+    let username = user_data.user_name;
+    let bio = user_data.bio.unwrap_or(" ");
+    let profile_pic = user_data.profile_pic.unwrap_or(" ");
+    // attempt to update
+    web::block(move || create_user(&data, username, bio, profile_pic))
+        .await??;
+
+    // return 204 status code on success
+    Ok(HttpResponse::NoContent())
 }

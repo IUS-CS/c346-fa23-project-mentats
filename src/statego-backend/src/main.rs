@@ -31,6 +31,7 @@ async fn main() -> io::Result<()> {
             .service(routes::get_users)
             .service(routes::hello)
             .service(routes::login)
+            .service(routes::update_user_profile)
     })
     .bind(("127.0.0.1", 8080))?
     .workers(2)
