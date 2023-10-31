@@ -10,18 +10,18 @@ function addPlayer() {}
 </script>
 
 <template>
-   <div class="drop-shadow-2xlshadow-2xl flex h-fit w-3/5 flex-col justify-center rounded-lg border-t-8 border-t-indigo-500 bg-gray-100 pb-12 pt-12">
+   <div class="drop-shadow-2xlshadow-2xl flex h-5/6 w-3/5 flex-col justify-center rounded-lg border-t-8 border-t-indigo-500 bg-gray-100 pb-12 pt-12 overflow-auto">
       <h1 class="flex w-full justify-center pb-5 font-Nunito-Sans text-2xl font-bold">Session Log</h1>
       <div class="flex h-full w-full flex-row">
          <div class="flex h-full w-2/3 flex-col pl-20 pr-20">
             <p class="pb-3 pl-2 pt-4 font-Nunito-Sans text-lg font-semibold">Game name</p>
-            <p class="pb-16 pl-2 font-Nunito-Sans text-lg font-semibold">Start</p>
-            <p class="pb-16 pl-2 pt-1 font-Nunito-Sans text-lg font-semibold">End</p>
+            <p class="pb-8 pl-2 font-Nunito-Sans text-lg font-semibold">Start</p>
+            <p class="pb-6 pl-2 pt-1 font-Nunito-Sans text-lg font-semibold">End</p>
             <p class="pb-6 pl-2 pt-1 font-Nunito-Sans text-lg font-semibold">Player 1</p>
             <p class="pb-5 pl-2 font-Nunito-Sans text-lg font-semibold">Player 2</p>
             <p class="pb-5 pl-2 font-Nunito-Sans text-lg font-semibold">Complete?</p>
             <p class="pb-5 pl-2 font-Nunito-Sans text-lg font-semibold">Winner</p>
-            <p class="pb-16 pl-2 font-Nunito-Sans text-lg font-semibold">Last Session of Campaign</p>
+            <p class="pb-6 pl-2 font-Nunito-Sans text-lg font-semibold">Last Session of Campaign</p>
             <p class="pb-20 pl-2 font-Nunito-Sans text-lg font-semibold">Description</p>
             <p class="pl-2 pt-7 font-Nunito-Sans text-lg font-semibold">Image</p>
          </div>
@@ -33,7 +33,7 @@ function addPlayer() {}
                   <input class="font-Nunito-Sans italic rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 text-center hover:bg-gray-100 pr-3" v-model="gameName" />
                </div>
                <!-- date and time started -->
-               <div class="flex flex-col pb-3">
+               <div class="flex flex-row pb-3">
                   <div class="pb-3 pr-3">
                      <input
                         class="rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 pl-6 pr-10 font-Nunito-Sans font-semibold hover:shadow-md"
@@ -53,7 +53,7 @@ function addPlayer() {}
                </div>
 
                <!-- date and time ended -->
-               <div class="flex flex-col pb-3">
+               <div class="flex flex-row pb-3">
                   <div class="pb-3 pr-3">
                      <input
                         class="rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 pl-6 pr-10 font-Nunito-Sans font-semibold hover:shadow-md"
@@ -95,12 +95,12 @@ function addPlayer() {}
                </div>
 
                <!-- winner textbox -->
-               <div class="pb-3">
+               <div class="pb-6">
                   <input class="font-Nunito-Sans rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 text-center hover:bg-gray-100 pr-3" v-model="winnerName" />
                </div>
 
                <!-- date and time of last session  -->
-               <div class="flex flex-col pb-3">
+               <div class="flex flex-row pb-8">
                   <div class="pb-3 pr-3">
                      <input
                         class="rounded-md border-2 border-solid border-gray-400 bg-gray-50 p-1 pl-6 pr-10 font-Nunito-Sans font-semibold hover:shadow-md"
@@ -129,7 +129,7 @@ function addPlayer() {}
 
                <!-- image upload button -->
                <input
-                  class="font-Nunito-Sans pb-4 file:rounded-md file:border-2 file:border-solid file:border-gray-400 file:bg-gray-50 file:p-1 file:hover:bg-gray-100 file:hover:shadow-md"
+                  class="font-Nunito-Sans pb-10 file:rounded-md file:border-2 file:border-solid file:border-gray-400 file:bg-gray-50 file:p-1 file:hover:bg-gray-100 file:hover:shadow-md"
                   type="file"
                   name="pictureUpload"
                   accept="image/*"
