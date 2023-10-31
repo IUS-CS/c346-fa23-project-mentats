@@ -13,9 +13,9 @@ Members present:
 
 This sprint, we completed:
 
-* Added a dependency for mySQL
-* A signup feature for creating users on the database.
-* A login feature to authenticate users on a database.
+* A change to site navigation by adding a side bar.
+* A redesign of the session log. 
+* A bugfix for an overflow bug when submitting a session log on Firefox.
 * A transition from Maven to Actix for the Rust Backend.
 * A redesign of the Session log page.
 
