@@ -15,7 +15,7 @@ function submit() {
 </script>
 
 <template>
-   <div class="flex w-5/6 flex-col items-center rounded-md border-t-8 border-violet-500 bg-gray-100 shadow-lg md:h-3/5 md:w-1/4">
+   <div class="flex w-5/6 flex-none flex-col items-center rounded-md border-t-8 border-violet-500 bg-gray-100 shadow-lg md:w-1/4">
       <h1 class="p-3 font-Nunito-Sans text-3xl font-bold">Sign Up</h1>
       <form class="flex w-full flex-col items-center justify-center gap-y-4">
          <!-- email addrees field -->
