@@ -126,6 +126,6 @@ pub fn update_user(
     if username.replace(' ', "").trim().is_empty() {
         Err(PersistenceError::EmptyUsername)
     } else {
-        return (update_bio_and_profilepic(&mut conn, username, bio, profile_pic));
+        Ok(update_bio_and_profilepic(&mut conn, username, bio, profile_pic)?)
     }
 }

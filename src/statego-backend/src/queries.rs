@@ -94,7 +94,7 @@ pub fn update_bio_and_profilepic(
         params! {
             "bio" => bio,
             "profile_pic" => profile_pic,
-            "username" => username
+            "username" => username.clone()
         }
     );
     conn.exec_first(
