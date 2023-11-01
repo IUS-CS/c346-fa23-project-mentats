@@ -13,17 +13,14 @@ Members present:
 
 This sprint, we completed:
 
-* A change to site navigation by adding a side bar.
+* A change to site navigation by adding a sidebar.
 * A redesign of the session log. 
 * A bugfix for an overflow bug when submitting a session log on Firefox.
-* A transition from Maven to Actix for the Rust Backend.
-* A redesign of the Session log page.
 
 Here are screenshots of what we did:
 
-![Login form](images/Login1.PNG)
-!![Session form](images/SessionLog2.PNG)
-
+![Signup form](images/Homepage1.PNG)
+![Session form](images/SessionLog.PNG)
 ## Retro
 
 [What is a Sprint Retrospective](https://www.scrum.org/resources/what-is-a-sprint-retrospective)
