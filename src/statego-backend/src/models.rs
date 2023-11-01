@@ -14,8 +14,7 @@ pub struct UserDetails {
     pub username: String,
     pub pass: String,
     pub first_name: String,
-    pub last_name: String,
-
+    pub last_name: String
 }
 
 #[derive(Debug, Serialize, FromRow)]
@@ -40,14 +39,14 @@ pub struct UserCredentials {
 
 #[derive(Debug, Deserialize)]
 pub struct UserUpdate {
-    pub user_name: String,
+    pub username: String,
     pub bio: Option<String>,
     pub profile_pic: Option<String>,
 }
 
 #[derive(Debug, Serialize, FromRow)]
 pub struct UserUpdateData {
-    pub user_name: String,
+    pub username: String,
     pub bio: String,
     pub profile_pic: String,
 }

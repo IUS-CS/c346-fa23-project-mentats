@@ -69,7 +69,7 @@ pub(crate) async fn update_user_profile(
     data: web::Data<mysql::Pool>,
 ) -> actix_web::Result<impl Responder> {
     // extract data from json
-    let username = user_data.user_name;
+    let username = user_data.username;
     let bio = user_data.bio.unwrap_or(String::from(" "));
     let profile_pic = user_data.profile_pic.unwrap_or(String::from(" "));
     // attempt to update
