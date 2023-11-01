@@ -11,7 +11,7 @@ use actix_web::{get, post, put, web, HttpResponse, Responder};
 // import models and functions from other files
 use crate::{
     models::{UserCredentials, UserDetails,UserUpdate},
-    persistence::{create_user_verify, get_users_verify, login_user_verify},
+    persistence::{create_user_verify, get_users_verify, login_user_verify, update_user},
 };
 
 // an example endpoint that just returns a string
@@ -70,10 +70,10 @@ pub(crate) async fn update_user_profile(
 ) -> actix_web::Result<impl Responder> {
     // extract data from json
     let username = user_data.user_name;
-    let bio = user_data.bio.unwrap_or(" ");
-    let profile_pic = user_data.profile_pic.unwrap_or(" ");
+    let bio = user_data.bio.unwrap_or(String::from(" "));
+    let profile_pic = user_data.profile_pic.unwrap_or(String::from(" "));
     // attempt to update
-    web::block(move || create_user(&data, username, bio, profile_pic))
+    web::block(move || update_user(&data, username, bio, profile_pic))
         .await??;
 
     // return 204 status code on success

@@ -9,9 +9,13 @@ use actix_web::http::StatusCode;
 use bcrypt::{hash, verify, DEFAULT_COST};
 use derive_more::{Display, Error, From};
 
-use crate::models::{UserData, UserResponseData};
+use crate::models::{UserData, UserResponseData, UserUpdateData};
 
-use crate::queries::{select_password_by_username, insert_new_ueser, select_user_by_id, select_all_users};
+use crate::queries::{select_password_by_username, 
+                    insert_new_ueser, 
+                    select_user_by_id, 
+                    select_all_users,
+                    update_bio_and_profilepic};
 
 #[derive(Debug, Display, Error, From)]
 pub enum PersistenceError {
@@ -116,7 +120,12 @@ pub fn update_user(
     username: String,
     bio: String,
     profile_pic: String
+) -> Result<UserUpdateData, PersistenceError> {
+    let mut conn = pool.get_conn()?;
 
-) -> Result<(), PersistenceError> {
-    
+    if username.replace(' ', "").trim().is_empty() {
+        Err(PersistenceError::EmptyUsername)
+    } else {
+        return (update_bio_and_profilepic(&mut conn, username, bio, profile_pic));
+    }
 }

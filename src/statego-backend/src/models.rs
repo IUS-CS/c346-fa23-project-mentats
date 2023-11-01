@@ -45,4 +45,11 @@ pub struct UserUpdate {
     pub profile_pic: Option<String>,
 }
 
+#[derive(Debug, Serialize, FromRow)]
+pub struct UserUpdateData {
+    pub user_name: String,
+    pub bio: String,
+    pub profile_pic: String,
+}
+
 

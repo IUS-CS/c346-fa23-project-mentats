@@ -7,6 +7,7 @@
 use mysql::{params, prelude::*};
 
 use crate::models::UserData;
+use crate::models::UserUpdateData;
 
 pub fn insert_new_ueser(
     conn: &mut mysql::PooledConn,
@@ -78,4 +79,33 @@ pub fn select_user_by_id(
         },
     )
     .map(|user| user.unwrap())
+}
+
+pub fn update_bio_and_profilepic(
+    conn: &mut mysql::PooledConn,
+    username: String,
+    bio: String,
+    profile_pic: String 
+) -> mysql::error::Result<UserUpdateData> {
+    conn.exec_drop(
+        r"UPDATE users 
+        SET bio = :bio, profile_pic = :profile_pic 
+        WHERE username = :username",
+        params! {
+            "bio" => bio,
+            "profile_pic" => profile_pic,
+            "username" => username
+        }
+    );
+    conn.exec_first(
+        "
+        SELECT username, bio, profile_pic
+        FROM users
+        WHERE username = :username
+        ",
+        params! {
+            "username" => username
+        },
+    )
+    .map(|user_update| user_update.unwrap())
 }
