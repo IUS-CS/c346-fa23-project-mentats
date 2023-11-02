@@ -2,7 +2,7 @@
 /// routes.rs
 /// 
 /// maps functions to http requests
-/// handles converiting to and from json
+/// handles converting to and from json
 /// handles sending responses to client
 /////////////////////////////////////////////
 
