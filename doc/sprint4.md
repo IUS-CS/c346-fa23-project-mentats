@@ -53,7 +53,7 @@ Here are screenshots of what we did:
 | 5      | As a user, I want a logged session after choosing log a session. |
 | 2      | As a user, I want a logged game after choosing entering a game.  |
 | 3      | As a user, I want a logged campaign after logging a campaign.    |
-| 5      | As an admin, I want to ensure features are well tested.          |
+| 5      | As a user, I want an about page to learn about the app.          |
 | 5      | As an admin, I want to ensure all features work together.        |
 
 
