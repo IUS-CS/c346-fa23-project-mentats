@@ -9,9 +9,13 @@ use actix_web::http::StatusCode;
 use bcrypt::{hash, verify, DEFAULT_COST};
 use derive_more::{Display, Error, From};
 
-use crate::models::{UserData, UserResponseData};
+use crate::models::{UserData, UserResponseData, UserUpdateData};
 
-use crate::queries::{select_password_by_username, insert_new_ueser, select_user_by_id, select_all_users};
+use crate::queries::{select_password_by_username, 
+                    insert_new_ueser, 
+                    select_user_by_id, 
+                    select_all_users,
+                    update_bio_and_profilepic};
 
 #[derive(Debug, Display, Error, From)]
 pub enum PersistenceError {
@@ -107,4 +111,21 @@ pub fn get_users_verify(pool: &mysql::Pool) -> Result<UserResponseData, Persiste
     Ok(UserResponseData {
         user_data: select_all_users(&mut conn)?,
     })
+}
+
+
+//function that checks if user exists and calls the query to update
+pub fn update_user(
+    pool: &mysql::Pool,
+    username: String,
+    bio: String,
+    profile_pic: String
+) -> Result<UserUpdateData, PersistenceError> {
+    let mut conn = pool.get_conn()?;
+
+    if username.replace(' ', "").trim().is_empty() {
+        Err(PersistenceError::EmptyUsername)
+    } else {
+        Ok(update_bio_and_profilepic(&mut conn, username, bio, profile_pic)?)
+    }
 }
