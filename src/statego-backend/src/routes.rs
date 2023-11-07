@@ -2,7 +2,7 @@
 /// routes.rs
 /// 
 /// maps functions to http requests
-/// handles converting to and from json
+/// handles converiting to and from json
 /// handles sending responses to client
 /////////////////////////////////////////////
 
@@ -10,8 +10,8 @@ use actix_web::{get, post, put, web, HttpResponse, Responder};
 
 // import models and functions from other files
 use crate::{
-    models::{UserCredentials, UserDetails},
-    persistence::{create_user_verify, get_users_verify, login_user_verify},
+    models::{UserCredentials, UserDetails,UserUpdate, Session},
+    persistence::{create_user_verify, get_users_verify, login_user_verify, update_user, create_session_persistence},
 };
 
 // an example endpoint that just returns a string
@@ -58,5 +58,52 @@ pub(crate) async fn login(
     let password = user_data.pass;
 
     let user = web::block(move || login_user_verify(&data, username, password)).await??;
+
     Ok(web::Json(user))
+}
+
+// endpoint for creating a new user
+#[post("/v1/users/profile")]
+pub(crate) async fn update_user_profile(
+    web::Json(user_data): web::Json<UserUpdate>,
+    data: web::Data<mysql::Pool>,
+) -> actix_web::Result<impl Responder> {
+    // extract data from json
+    let username = user_data.username;
+    let bio = user_data.bio.unwrap_or(String::from(" "));
+    let profile_pic = user_data.profile_pic.unwrap_or(String::from(" "));
+    // attempt to update
+    web::block(move || update_user(&data, username, bio, profile_pic))
+        .await??;
+
+    // return 204 status code on success
+    Ok(HttpResponse::NoContent())
+}
+
+
+// endpoint for creating a new session
+#[post("/v1/users/session")]
+pub(crate) async fn create_session(
+    web::Json(session_data): web::Json<Session>,
+    data: web::Data<mysql::Pool>,
+) -> actix_web::Result<impl Responder> {
+    // extract data from json
+    
+    let username = session_data.username;
+    let game_title = session_data.game_title;
+    let campaign_title = session_data.campaign_title;
+    let session_start = session_data.session_start;
+    let session_end = session_data.session_end;
+    let players = session_data.players;
+    let notes = session_data.notes;
+    let winner = session_data.winner;
+    let winner_name = session_data.winner_name;
+    let session_picture_link = session_data.session_picture_link;
+    // attempt to create session
+    web::block(move || create_session_persistence(&data, username, game_title, campaign_title, session_start, session_end, players,
+        notes, winner, winner_name, session_picture_link))
+        .await??;
+
+    // return 204 status code on success
+    Ok(HttpResponse::NoContent())
 }

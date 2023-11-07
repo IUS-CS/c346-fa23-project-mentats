@@ -6,7 +6,9 @@
 
 use mysql::{params, prelude::*};
 
-use crate::models::UserData;
+use crate::models::{UserData, 
+                    UserUpdateData,
+                    };
 
 pub fn insert_new_ueser(
     conn: &mut mysql::PooledConn,
@@ -78,4 +80,113 @@ pub fn select_user_by_id(
         },
     )
     .map(|user| user.unwrap())
+}
+
+pub fn update_bio_and_profilepic(
+    conn: &mut mysql::PooledConn,
+    username: String,
+    bio: String,
+    profile_pic: String 
+) -> mysql::error::Result<UserUpdateData> {
+    conn.exec_drop(
+        r"UPDATE users 
+        SET bio = :bio, profile_pic = :profile_pic 
+        WHERE username = :username",
+        params! {
+            "bio" => bio,
+            "profile_pic" => profile_pic,
+            "username" => username.clone()
+        }
+    );
+    conn.exec_first(
+        "
+        SELECT username, bio, profile_pic
+        FROM users
+        WHERE username = :username
+        ",
+        params! {
+            "username" => username
+        },
+    )
+    .map(|user_update| user_update.unwrap())
+}
+
+pub fn create_session_in_database(
+    conn: &mut mysql::PooledConn,
+    user_id: u64,
+    game_id: u64,
+    campaign_id: Option<u64>,
+    session_start_string: String,
+    session_end_string: String,
+    player_string: String,
+    number_of_players: i8,
+    notes: Option<String>,
+    winner: bool,
+    winner_name: Option<String>,
+    session_picture_link: Option<String>
+) -> mysql::error::Result<u64> {
+    conn.exec_drop(
+        "
+        INSERT INTO session (user_id, game_id, campaign_id, 
+        session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)
+        VALUES (:user_id, :game_id, :campaign_id, 
+            :session_start, :session_end, :player_string, :notes, :winner, :winner_name, :session_picture_link, :number_of_players)
+        ",
+        params! {
+            "user_id" => user_id,
+            "game_id" => game_id,
+            "campaign_id" => campaign_id,
+            "session_start" => session_start_string,
+            "session_end" => session_end_string,
+            "players" => player_string,
+            "notes" => notes,
+            "winner" => winner,
+            "winner_name" => winner_name,
+            "picture" => session_picture_link,
+            "number_of_players" => number_of_players
+        },
+    )
+    .map(|_| conn.last_insert_id())
+}
+
+pub fn select_gameid_by_gamestring(conn: &mut mysql::PooledConn, game_name: String) -> mysql::error::Result<u64> {
+    conn.exec_first(
+        "
+        SELECT game_id
+        FROM games
+        WHERE game_name = :game_name
+        ",
+        params! {
+            "game_name" => game_name
+        },
+    )
+    .map(|game_id| game_id.unwrap())
+}
+
+pub fn select_campaignid_by_campaignstring(conn: &mut mysql::PooledConn, campaign_name: Option<String>) -> mysql::error::Result<u64> {
+    conn.exec_first(
+        "
+        SELECT campaign_id
+        FROM campaigns
+        WHERE campaign_name = :campaign_name
+        ",
+        params! {
+            "campaign_name" => campaign_name.unwrap()
+        },
+    )
+    .map(|campaign_id| campaign_id.unwrap())
+}
+
+pub fn select_userid_by_userstring(conn: &mut mysql::PooledConn, user_name: String) -> mysql::error::Result<u64> {
+    conn.exec_first(
+        "
+        SELECT user_id
+        FROM games
+        WHERE user_name = :user_name
+        ",
+        params! {
+            "user_name" => user_name
+        },
+    )
+    .map(|user_id| user_id.unwrap())
 }
