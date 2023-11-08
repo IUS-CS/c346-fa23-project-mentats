@@ -10,8 +10,8 @@ use actix_web::{get, post, put, web, HttpResponse, Responder};
 
 // import models and functions from other files
 use crate::{
-    models::{UserCredentials, UserDetails,UserUpdate, Session},
-    persistence::{create_user_verify, get_users_verify, login_user_verify, update_user, create_session_persistence},
+    models::*,
+    persistence::*,
 };
 
 // an example endpoint that just returns a string
@@ -106,4 +106,22 @@ pub(crate) async fn create_session(
 
     // return 204 status code on success
     Ok(HttpResponse::NoContent())
+}
+
+
+// endpoint for getting a new session
+#[get("/v1/users/session")]
+pub(crate) async fn get_list_of_sessions(
+    web::Json(sessions_find): web::Json<SessionsFind>,
+    data: web::Data<mysql::Pool>,
+) -> actix_web::Result<impl Responder> {
+    // extract data from json
+    let username = sessions_find.username;
+    let game_title = sessions_find.game_title;
+    let campaign_title = sessions_find.campaign_title;
+    // attempt to create session
+    let session_list: web::block(move || get_list_of_sessions_persistence(&data, username, game_title, campaign_title)).await??;
+
+    // return 204 status code on success
+    Ok(web::Json(session_list))
 }

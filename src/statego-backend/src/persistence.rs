@@ -10,8 +10,7 @@ use bcrypt::{hash, verify, DEFAULT_COST};
 use derive_more::{Display, Error, From};
 use chrono::{NaiveDateTime, prelude::*};
 
-use crate::models::{UserData, UserResponseData, UserUpdateData};
-
+use crate::models::*;
 use crate::queries::*;
 
 #[derive(Debug, Display, Error, From)]
@@ -199,5 +198,36 @@ pub fn create_session_persistence(
         Err(PersistenceError::Unknown)
     }
 
+    
+}
+
+//function that checks if user exists and calls the query to update
+pub fn get_list_of_sessions_persistence(
+    pool: &mysql::Pool,
+    username: String,
+    game_title: String,
+    campaign_title: Option<String>,
+) -> Result<SessionDataConverted, PersistenceError> {
+    let mut conn = pool.get_conn()?;
+    //get number of players
+    //get user_id
+    let user_id = select_userid_by_userstring(&mut conn, username).unwrap();
+    //get game_id
+    let game_id = select_gameid_by_gamestring(&mut conn, game_title).unwrap();
+    //if campaign isn't empty, get campaign_id
+    let mut campaign_id: Option<u64> = None;
+    if !campaign_title.is_none(){
+        campaign_id = Some(select_campaignid_by_campaignstring(&mut conn, campaign_title).unwrap());
+    }
+    
+    let unconverted_session_vec = (get_list_of_sessions_queries(&mut conn, user_id, game_id, campaign_id)).unwrap();
+
+    let converted_session_vec: Vec<SessionDataConverted> = Vec::new();
+    for SessionDataUnConverted in unconverted_session_vec {
+        let session_start: Vec<&str> = SessionDataUnConverted.session_start.split(',').collect();
+    }
+    
+
+    Ok(converted_session_vec)
     
 }

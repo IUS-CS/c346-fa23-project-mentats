@@ -6,9 +6,7 @@
 
 use mysql::{params, prelude::*};
 
-use crate::models::{UserData, 
-                    UserUpdateData,
-                    };
+use crate::models::*;
 
 pub fn insert_new_ueser(
     conn: &mut mysql::PooledConn,
@@ -190,3 +188,30 @@ pub fn select_userid_by_userstring(conn: &mut mysql::PooledConn, user_name: Stri
     )
     .map(|user_id| user_id.unwrap())
 }
+
+
+pub fn get_list_of_sessions_queries(
+    conn: &mut mysql::PooledConn,
+    user_id: u64,
+    game_id: u64,
+    campaign_id: Option<u64>
+) -> mysql::error::Result<Vec<SessionDataUnConverted>> {
+    conn.query_map(
+        "
+        SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
+        FROM sessions
+        WHERE user_id = :user_id , game_id = :game_id , campaign_id = :campaign_id
+        ",
+        |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
+            session_start: session_start,
+            session_end: session_end,
+            players: players,
+            notes: notes,
+            winner: winner,
+            winner_name: winner_name,
+            session_picture_link: picture,
+            number_of_players: number_of_players
+        },
+    )
+}
+

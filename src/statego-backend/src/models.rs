@@ -66,18 +66,34 @@ pub struct Session {
 }
 
 #[derive(Debug, Serialize)]
-pub struct SessionData {
-    pub username: String,
-    pub game_title: String,
-    pub campaign_title: String,
+pub struct SessionDataConverted {
     pub session_start: NaiveDateTime,
     pub session_end: NaiveDateTime,
     pub players: Vec<String>,
-    pub notes: String,
+    pub notes: Option<String>,
     pub winner: bool,
-    pub winner_name: String,
-    pub session_picture_link: String,
+    pub winner_name: Option<String>,
+    pub session_picture_link: Option<String>,
+    pub number_of_players: i8
 }
+pub struct SessionDataUnConverted {
+    pub session_start: String,
+    pub session_end: String,
+    pub players: String,
+    pub notes: Option<String>,
+    pub winner: bool,
+    pub winner_name: Option<String>,
+    pub session_picture_link: Option<String>,
+    pub number_of_players: i8
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SessionsFind {
+    pub username: String,
+    pub game_title: String,
+    pub campaign_title: Option<String>
+}
+
 
 
 
