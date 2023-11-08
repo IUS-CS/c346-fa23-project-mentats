@@ -122,6 +122,6 @@ pub(crate) async fn get_list_of_sessions(
     // attempt to create session
     let session_list = web::block(move || get_list_of_sessions_persistence(&data, username, game_title, campaign_title)).await??;
 
-    // return 204 status code on success
+    // a list of sessions that match the game title and campaign title for a user
     Ok(web::Json(session_list))
 }

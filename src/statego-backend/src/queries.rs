@@ -179,7 +179,7 @@ pub fn select_userid_by_userstring(conn: &mut mysql::PooledConn, user_name: Stri
     conn.exec_first(
         "
         SELECT user_id
-        FROM games
+        FROM users
         WHERE user_name = :user_name
         ",
         params! {
@@ -196,16 +196,17 @@ pub fn get_list_of_sessions_queries(
     game_id: u64,
     campaign_id: Option<u64>
 ) -> mysql::error::Result<Vec<SessionDataUnConverted>> {
-    conn.query_map(
+    conn.exec_map(
         "
         SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
         FROM sessions
         WHERE user_id = :user_id , game_id = :game_id , campaign_id = :campaign_id
-        "
-        //params! {
-        //    "user_id" => user_id,
-        //    "game_id" => game_id,
-        //   "campaign_id" =>campaign id
+        ",
+        params! {
+            "user_id" => user_id,
+            "game_id" => game_id,
+           "campaign_id" =>campaign_id
+        }
         ,
 
         |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
