@@ -207,7 +207,7 @@ pub fn get_list_of_sessions_persistence(
     username: String,
     game_title: String,
     campaign_title: Option<String>,
-) -> Result<SessionDataConverted, PersistenceError> {
+) -> Result<Vec<SessionDataConverted>, PersistenceError> {
     let mut conn = pool.get_conn()?;
     //get number of players
     //get user_id
@@ -222,12 +222,54 @@ pub fn get_list_of_sessions_persistence(
     
     let unconverted_session_vec = (get_list_of_sessions_queries(&mut conn, user_id, game_id, campaign_id)).unwrap();
 
-    let converted_session_vec: Vec<SessionDataConverted> = Vec::new();
+    let mut converted_session_vec: Vec<SessionDataConverted> = Vec::new();
     for SessionDataUnConverted in unconverted_session_vec {
-        let session_start: Vec<&str> = SessionDataUnConverted.session_start.split(',').collect();
-    }
-    
+        //create SessionDataConverted Object last
+        
+        //split session_start string into a vector of strings
+        let session_start_vec: Vec<&str> = SessionDataUnConverted.session_start.split(',').collect();
+        //create NaiveDateTime object out of string
+        let year = session_start_vec[0].parse::<i32>();
+        let month = session_start_vec[1].parse::<u32>();
+        let day = session_start_vec[2].parse::<u32>();
+        let hour = session_start_vec[3].parse::<u32>();
+        let minute = session_start_vec[4].parse::<u32>();
+        let second = session_start_vec[5].parse::<u32>();
+        let date = NaiveDate::from_ymd_opt(year.unwrap(), month.unwrap(), day.unwrap()).unwrap();
+        let time = NaiveTime::from_hms_opt(hour.unwrap(), minute.unwrap(), second.unwrap()).unwrap();
+        let session_start_datetime = NaiveDateTime::new(date, time);
 
+        let session_end_vec: Vec<&str> = SessionDataUnConverted.session_end.split(',').collect();
+        //create NaiveDateTime object out of string
+        let year = session_end_vec[0].parse::<i32>();
+        let month = session_end_vec[1].parse::<u32>();
+        let day = session_end_vec[2].parse::<u32>();
+        let hour = session_end_vec[3].parse::<u32>();
+        let minute = session_end_vec[4].parse::<u32>();
+        let second = session_end_vec[5].parse::<u32>();
+        let date = NaiveDate::from_ymd_opt(year.unwrap(), month.unwrap(), day.unwrap()).unwrap();
+        let time = NaiveTime::from_hms_opt(hour.unwrap(), minute.unwrap(), second.unwrap()).unwrap();
+        let session_end_datetime = NaiveDateTime::new(date, time);
+
+        //turn players string into a vector of &str, and then into a vector of Strings for return
+        let players_str_vec: Vec<&str> = SessionDataUnConverted.players.split(',').collect();
+        let players_string_vec: Vec<String> = players_str_vec.into_iter().map(|s| s.to_string()).collect();
+
+        let converted_session_data = SessionDataConverted{
+            session_start: session_start_datetime,
+            session_end:    session_end_datetime,
+            players: players_string_vec,
+            notes: SessionDataUnConverted.notes,
+            winner: SessionDataUnConverted.winner,
+            winner_name: SessionDataUnConverted.winner_name,
+            session_picture_link: SessionDataUnConverted.session_picture_link,
+            number_of_players: SessionDataUnConverted.number_of_players
+        };
+        
+        converted_session_vec.push(converted_session_data);
+    }
+
+    //see using the struct declared for models when dealing with errors
     Ok(converted_session_vec)
     
 }

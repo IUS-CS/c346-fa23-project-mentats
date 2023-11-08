@@ -87,6 +87,11 @@ pub struct SessionDataUnConverted {
     pub number_of_players: i8
 }
 
+#[derive(Debug, Serialize)]
+pub struct SessionResponseVec {
+    pub session_list: Vec<SessionDataConverted>
+}
+
 #[derive(Debug, Deserialize)]
 pub struct SessionsFind {
     pub username: String,

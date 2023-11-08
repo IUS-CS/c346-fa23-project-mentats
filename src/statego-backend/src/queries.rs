@@ -201,7 +201,13 @@ pub fn get_list_of_sessions_queries(
         SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
         FROM sessions
         WHERE user_id = :user_id , game_id = :game_id , campaign_id = :campaign_id
-        ",
+        "
+        //params! {
+        //    "user_id" => user_id,
+        //    "game_id" => game_id,
+        //   "campaign_id" =>campaign id
+        ,
+
         |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
             session_start: session_start,
             session_end: session_end,
