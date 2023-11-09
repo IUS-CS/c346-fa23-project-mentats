@@ -16,5 +16,6 @@ dotenv = "0.15"
 env_logger = "0.10.0"
 log = "0.4.20"
 mysql = "24"
+mysql_common = {version = "0.31.0", features = ["chrono"]}
 openssl = {version = "0.10.57", features = ["v110"]}
 serde = "1.0.188"

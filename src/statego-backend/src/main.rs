@@ -7,8 +7,7 @@
 /////////////////////////////////////////////
 
 use actix_web::{web, App, HttpServer};
-use mysql::{Pool, SslOpts};
-use std::{env, io};
+use std::io;
 
 // modules from other files in project
 mod models;
@@ -34,6 +33,10 @@ async fn main() -> io::Result<()> {
             .service(routes::hello)
             .service(routes::login)
             .service(routes::update_user_profile)
+            .service(routes::create_session)
+            .service(routes::get_list_of_sessions)
+            .service(routes::create_game)
+            .service(routes::create_campaign)
     })
     .bind(("127.0.0.1", 8080))?
     .workers(2)
