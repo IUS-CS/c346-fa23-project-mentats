@@ -37,6 +37,8 @@ async fn main() -> io::Result<()> {
             .service(routes::get_list_of_sessions)
             .service(routes::create_game)
             .service(routes::create_campaign)
+            .service(routes::get_list_of_games)
+            .service(routes::get_list_of_campaigns)
     })
     .bind(("127.0.0.1", 8080))?
     .workers(2)

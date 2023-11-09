@@ -196,30 +196,58 @@ pub fn get_list_of_sessions_queries(
     game_id: u64,
     campaign_id: Option<u64>
 ) -> mysql::error::Result<Vec<SessionDataUnConverted>> {
-    conn.exec_map(
-        "
-        SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
-        FROM sessions
-        WHERE user_id = :user_id , game_id = :game_id , campaign_id = :campaign_id
-        ",
-        params! {
-            "user_id" => user_id,
-            "game_id" => game_id,
-           "campaign_id" =>campaign_id
-        }
-        ,
+    if campaign_id.is_none(){
+        conn.exec_map(
+            "
+            SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
+            FROM session
+            WHERE user_id = :user_id AND game_id = :game_id AND campaign_id IS NULL
+            ",
+            params! {
+                "user_id" => user_id,
+                "game_id" => game_id,
+            "campaign_id" => campaign_id
+            }
+            ,
 
-        |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
-            session_start: session_start,
-            session_end: session_end,
-            players: players,
-            notes: notes,
-            winner: winner,
-            winner_name: winner_name,
-            session_picture_link: picture,
-            number_of_players: number_of_players
-        },
-    )
+            |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
+                session_start: session_start,
+                session_end: session_end,
+                players: players,
+                notes: notes,
+                winner: winner,
+                winner_name: winner_name,
+                picture: picture,
+                number_of_players: number_of_players
+            }
+        ) 
+    }
+    else{
+        conn.exec_map(
+            "
+            SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
+            FROM session
+            WHERE user_id = :user_id AND game_id = :game_id AND campaign_id = :campaign_id
+            ",
+            params! {
+                "user_id" => user_id,
+                "game_id" => game_id,
+            "campaign_id" => campaign_id
+            }
+            ,
+
+            |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
+                session_start: session_start,
+                session_end: session_end,
+                players: players,
+                notes: notes,
+                winner: winner,
+                winner_name: winner_name,
+                picture: picture,
+                number_of_players: number_of_players
+            }
+        ) 
+    }   
 }
 
 pub fn create_game_in_database(
@@ -268,62 +296,46 @@ pub fn create_campaign_in_database(
     .map(|_| conn.last_insert_id())
 }
 
-//pub fn get_list_of_games_queries(
-//    conn: &mut mysql::PooledConn,
-//    user_id: u64,
-//) -> mysql::error::Result<Vec<GameInfo>> {
-//    conn.exec_map(
-//        "
-//        SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
-//        FROM sessions
-//        WHERE user_id = :user_id , game_id = :game_id , campaign_id = :campaign_id
-//       ",
-//        params! {
-//            "user_id" => user_id,
-//            "game_id" => game_id,
-//           "campaign_id" =>campaign_id
-//        }
-//        ,
-//
-//        |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
-//            session_start: session_start,
-//            session_end: session_end,
-//            players: players,
-//            notes: notes,
-//            winner: winner,
-//            winner_name: winner_name,
-//            session_picture_link: picture,
-//            number_of_players: number_of_players
-//        },
-//    )
-//}
+pub fn get_list_of_games_queries(
+    conn: &mut mysql::PooledConn,
+    user_id: u64,
+) -> mysql::error::Result<Vec<GameInfo>> {
+    conn.exec_map(
+        "
+        SELECT game_name, descr FROM games WHERE user_id = :user_id
+        ",
+        params! {
+            "user_id" => user_id
+        }
+        ,
 
-//pub fn get_list_of_campaigns_for_game_queries(
-//    conn: &mut mysql::PooledConn,
-//    user_id: u64,
-//) -> mysql::error::Result<Vec<CampaignInfo>> {
-//    conn.exec_map(
-//        "
-//        SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
-//        FROM sessions
-//        WHERE user_id = :user_id , game_id = :game_id , campaign_id = :campaign_id
-//        ",
-//        params! {
-//            "user_id" => user_id,
-//            "game_id" => game_id,
-//           "campaign_id" =>campaign_id
-//        }
-//        ,
-//
-//        |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
-//            session_start: session_start,
-//            session_end: session_end,
-//            players: players,
-//            notes: notes,
-//            winner: winner,
-//            winner_name: winner_name,
-//            session_picture_link: picture,
-//            number_of_players: number_of_players
-//        },
-//    )
-//}
+        |(game_name, descr)| GameInfo {
+            game_title: game_name,
+            description: descr
+        },
+    )
+}
+
+pub fn get_list_of_campaigns_queries(
+    conn: &mut mysql::PooledConn,
+    user_id: u64,
+    game_id: u64,
+) -> mysql::error::Result<Vec<CampaignInfo>> {
+    conn.exec_map(
+        "
+        SELECT campaign_name, descr, notes FROM campaign WHERE user_id = :user_id AND game_id = :game_id
+        ",
+        params! {
+            "user_id" => user_id,
+            "game_id" => game_id
+        }
+        ,
+
+        |( campaign_name, descr, notes)| CampaignInfo {
+            
+            campaign_title: campaign_name,
+            description: descr,
+            notes: notes
+        },
+    )
+}

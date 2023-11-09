@@ -98,10 +98,10 @@ pub(crate) async fn create_session(
     let notes = session_data.notes;
     let winner = session_data.winner;
     let winner_name = session_data.winner_name;
-    let session_picture_link = session_data.session_picture_link;
+    let picture = session_data.picture;
     // attempt to create session
     web::block(move || create_session_persistence(&data, username, game_title, campaign_title, session_start, session_end, players,
-        notes, winner, winner_name, session_picture_link))
+        notes, winner, winner_name, picture))
         .await??;
 
     // return 204 status code on success
@@ -168,17 +168,34 @@ pub(crate) async fn create_campaign(
     Ok(HttpResponse::NoContent())
 }
 
-// endpoint for getting a list of games for a user
-//#[get("/v1/users/games")]
-//pub(crate) async fn get_list_of_games(
-//    web::Json(games_find): web::Json<GameFind>,
-//    data: web::Data<mysql::Pool>,
-//) -> actix_web::Result<impl Responder> {
+ //endpoint for getting a list of games for a user
+ //IMPLEMENT RETURNING A LIST OF CAMPAIGNS WITHIN EACH GAME VECTOR RETURNED
+#[get("/v1/users/games")]
+pub(crate) async fn get_list_of_games(
+    web::Json(games_find): web::Json<GameFind>,
+    data: web::Data<mysql::Pool>,
+) -> actix_web::Result<impl Responder> {
     // extract data from json
-//    let username = games_find.username;
+    let username = games_find.username;
     // attempt to create session
-//    let games_list = web::block(move || get_list_of_games_persistence(&data, username)).await??;
-//
+    let games_list = web::block(move || get_list_of_games_persistence(&data, username)).await??;
+
     // a list of sessions that match the game title and campaign title for a user
-//   Ok(web::Json(games_list))
-//}
+   Ok(web::Json(games_list))
+}
+
+ //endpoint for getting a list of games for a user
+ #[get("/v1/users/campaigns")]
+ pub(crate) async fn get_list_of_campaigns(
+     web::Json(campaign_find): web::Json<CampaignFind>,
+     data: web::Data<mysql::Pool>,
+ ) -> actix_web::Result<impl Responder> {
+     // extract data from json
+     let username = campaign_find.username;
+     let game_title = campaign_find.game_title;
+     // attempt to create session
+     let campaigns_list = web::block(move || get_list_of_campaigns_persistence(&data, username, game_title)).await??;
+ 
+     // a list of sessions that match the game title and campaign title for a user
+    Ok(web::Json(campaigns_list))
+ }

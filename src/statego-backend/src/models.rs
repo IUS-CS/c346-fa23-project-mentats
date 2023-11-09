@@ -64,7 +64,7 @@ pub struct Session {
     pub notes: Option<String>,
     pub winner: bool,
     pub winner_name: Option<String>,
-    pub session_picture_link: Option<String>
+    pub picture: Option<String>
 }
 
 #[derive(Debug, Serialize)]
@@ -77,9 +77,12 @@ pub struct SessionDataConverted {
     pub notes: Option<String>,
     pub winner: bool,
     pub winner_name: Option<String>,
-    pub session_picture_link: Option<String>,
+    pub picture: Option<String>,
     pub number_of_players: i8
 }
+
+
+#[derive(Debug, Serialize, FromRow)]
 pub struct SessionDataUnConverted {
     pub session_start: String,
     pub session_end: String,
@@ -87,7 +90,7 @@ pub struct SessionDataUnConverted {
     pub notes: Option<String>,
     pub winner: bool,
     pub winner_name: Option<String>,
-    pub session_picture_link: Option<String>,
+    pub picture: Option<String>,
     pub number_of_players: i8
 }
 
@@ -134,12 +137,11 @@ pub struct CampaignFind {
 pub struct GameInfo {
     pub game_title: String,
     pub description: Option<String>,
-    pub campaign_list: Vec<CampaignInfo>
+    //pub campaign_list: Vec<CampaignInfo>
 }
 
 #[derive(Debug, Serialize)]
 pub struct CampaignInfo {
-    pub game_title: String,
     pub campaign_title: String,
     pub description: Option<String>,
     pub notes: Option<String>
