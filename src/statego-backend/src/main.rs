@@ -7,8 +7,7 @@
 /////////////////////////////////////////////
 
 use actix_web::{web, App, HttpServer};
-use mysql::{Pool, SslOpts};
-use std::{env, io};
+use std::io;
 
 // modules from other files in project
 mod models;
