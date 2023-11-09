@@ -5,8 +5,8 @@
 /////////////////////////////////////////////
 
 use mysql::{params, prelude::*};
-
 use crate::models::*;
+
 
 pub fn insert_new_ueser(
     conn: &mut mysql::PooledConn,

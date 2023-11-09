@@ -80,7 +80,6 @@ pub(crate) async fn update_user_profile(
     Ok(HttpResponse::NoContent())
 }
 
-
 // endpoint for creating a new session
 #[post("/v1/users/session")]
 pub(crate) async fn create_session(
