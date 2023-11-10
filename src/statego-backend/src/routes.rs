@@ -80,7 +80,6 @@ pub(crate) async fn update_user_profile(
     Ok(HttpResponse::NoContent())
 }
 
-
 // endpoint for creating a new session
 #[post("/v1/users/session")]
 pub(crate) async fn create_session(
@@ -198,4 +197,4 @@ pub(crate) async fn get_list_of_games(
  
      // a list of sessions that match the game title and campaign title for a user
     Ok(web::Json(campaigns_list))
- }
+}

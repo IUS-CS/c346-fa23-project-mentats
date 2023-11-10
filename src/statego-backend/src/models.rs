@@ -65,6 +65,7 @@ pub struct Session {
     pub winner: bool,
     pub winner_name: Option<String>,
     pub picture: Option<String>
+
 }
 
 #[derive(Debug, Serialize)]
@@ -176,8 +177,6 @@ mod my_date_format{
         Ok(dt)
     }
 }
-
-
 
 
 

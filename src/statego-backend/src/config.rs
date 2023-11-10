@@ -1,6 +1,7 @@
 use mysql::{Pool, SslOpts};
 use std::env;
 
+
 // set up database connection from .env file and return a connection pool
 pub fn set_up_environment() -> Pool {
     // import environment variables from .env file

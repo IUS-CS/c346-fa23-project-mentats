@@ -5,8 +5,8 @@
 /////////////////////////////////////////////
 
 use mysql::{params, prelude::*};
-
 use crate::models::*;
+
 
 pub fn insert_new_ueser(
     conn: &mut mysql::PooledConn,
@@ -174,7 +174,6 @@ pub fn select_campaignid_by_campaignstring(conn: &mut mysql::PooledConn, campaig
     )
     .map(|campaign_id| campaign_id.unwrap())
 }
-
 pub fn select_userid_by_userstring(conn: &mut mysql::PooledConn, username: String) -> mysql::error::Result<u64> {
     conn.exec_first(
         "
@@ -332,7 +331,6 @@ pub fn get_list_of_campaigns_queries(
         ,
 
         |( campaign_name, descr, notes)| CampaignInfo {
-            
             campaign_title: campaign_name,
             description: descr,
             notes: notes

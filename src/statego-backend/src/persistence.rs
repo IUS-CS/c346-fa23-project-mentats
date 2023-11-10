@@ -173,7 +173,6 @@ pub fn create_session_persistence(
     session_vec_start.push(minute_str);
     session_vec_start.push(second_str);
     let session_start_string = session_vec_start.join(",");
-
     let year_str = session_end.date().year().to_string();
     let month_str = session_end.date().month().to_string();
     let day_str = session_end.date().day().to_string();
@@ -191,6 +190,7 @@ pub fn create_session_persistence(
 
     let last_insert_id = create_session_in_database(&mut conn, user_id, game_id, campaign_id, session_start_string, session_end_string, player_string,
     number_of_players, notes, winner, winner_name, picture);
+   
     if last_insert_id.unwrap() > 0 {
         Ok(())
     } else {
