@@ -2,6 +2,7 @@
 import { useMouseInElement } from '@vueuse/core';
 import { computed, ref } from 'vue';
 import type { RouterLink } from 'vue-router';
+// @ts-ignore
 import { useElementTransform } from '/node_modules/@vueuse/motion/dist';
 
 const target = ref();
