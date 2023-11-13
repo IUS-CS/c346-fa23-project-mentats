@@ -56,26 +56,34 @@ pub struct Session {
     pub username: String,
     pub game_title: String,
     pub campaign_title: Option<String>,
+    #[serde(with = "my_date_format")]
     pub session_start: NaiveDateTime,
+    #[serde(with = "my_date_format")]
     pub session_end: NaiveDateTime,
     pub players: Vec<String>,
     pub notes: Option<String>,
     pub winner: bool,
     pub winner_name: Option<String>,
-    pub session_picture_link: Option<String>
+    pub picture: Option<String>
+
 }
 
 #[derive(Debug, Serialize)]
 pub struct SessionDataConverted {
+    #[serde(with = "my_date_format")]
     pub session_start: NaiveDateTime,
+    #[serde(with = "my_date_format")]
     pub session_end: NaiveDateTime,
     pub players: Vec<String>,
     pub notes: Option<String>,
     pub winner: bool,
     pub winner_name: Option<String>,
-    pub session_picture_link: Option<String>,
+    pub picture: Option<String>,
     pub number_of_players: i8
 }
+
+
+#[derive(Debug, Serialize, FromRow)]
 pub struct SessionDataUnConverted {
     pub session_start: String,
     pub session_end: String,
@@ -83,7 +91,7 @@ pub struct SessionDataUnConverted {
     pub notes: Option<String>,
     pub winner: bool,
     pub winner_name: Option<String>,
-    pub session_picture_link: Option<String>,
+    pub picture: Option<String>,
     pub number_of_players: i8
 }
 
@@ -97,6 +105,77 @@ pub struct SessionsFind {
     pub username: String,
     pub game_title: String,
     pub campaign_title: Option<String>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct NewGame {
+    pub username: String,
+    pub game_title: String,
+    pub description: Option<String>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct NewCampaign {
+    pub username: String,
+    pub game_title: String,
+    pub campaign_title: String,
+    pub description: Option<String>,
+    pub notes: Option<String>
+}
+
+#[derive(Debug, Deserialize)]
+pub struct GameFind {
+    pub username: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct CampaignFind {
+    pub username: String,
+    pub game_title: String
+}
+
+#[derive(Debug, Serialize)]
+pub struct GameInfo {
+    pub game_title: String,
+    pub description: Option<String>,
+    //pub campaign_list: Vec<CampaignInfo>
+}
+
+#[derive(Debug, Serialize)]
+pub struct CampaignInfo {
+    pub campaign_title: String,
+    pub description: Option<String>,
+    pub notes: Option<String>
+}
+
+
+mod my_date_format{
+    use chrono::NaiveDateTime;
+    use serde::{self, Deserialize, Serializer, Deserializer};
+
+
+    const FORMAT: &'static str = "%Y-%m-%d %H:%M:%S";
+    pub fn serialize<S>(
+        date: &NaiveDateTime,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let s = format!("{}", date.format(FORMAT));
+        serializer.serialize_str(&s)
+    }
+
+    pub fn deserialize<'de, D>(
+        deserializer: D,
+    ) -> Result<NaiveDateTime, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        let s = String::deserialize(deserializer)?;
+        let dt = NaiveDateTime::parse_from_str(&s, FORMAT).map_err(serde::de::Error::custom)?;
+        Ok(dt)
+    }
 }
 
 

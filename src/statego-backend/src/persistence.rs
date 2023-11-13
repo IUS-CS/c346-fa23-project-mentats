@@ -126,7 +126,6 @@ pub fn update_user(
     }
 }
 
-//function that checks if user exists and calls the query to update
 pub fn create_session_persistence(
     pool: &mysql::Pool,
     username: String,
@@ -138,13 +137,13 @@ pub fn create_session_persistence(
     notes: Option<String>,
     winner: bool,
     winner_name: Option<String>,
-    session_picture_link: Option<String>
+    picture: Option<String>
 ) -> Result<(), PersistenceError> {
     let mut conn = pool.get_conn()?;
     //get number of players
     let number_of_players = players.len() as i8;
     //turn players vector into a string
-    let player_string = players.join(", "); // No separator
+    let player_string = players.join(","); // Seperated by commas
     //get user_id
     let user_id = select_userid_by_userstring(&mut conn, username).unwrap();
     //get game_id
@@ -173,8 +172,7 @@ pub fn create_session_persistence(
     session_vec_start.push(hour_str);
     session_vec_start.push(minute_str);
     session_vec_start.push(second_str);
-    let session_start_string = session_vec_start.join(", ");
-
+    let session_start_string = session_vec_start.join(",");
     let year_str = session_end.date().year().to_string();
     let month_str = session_end.date().month().to_string();
     let day_str = session_end.date().day().to_string();
@@ -188,10 +186,11 @@ pub fn create_session_persistence(
     session_vec_end.push(hour_str);
     session_vec_end.push(minute_str);
     session_vec_end.push(second_str);
-    let session_end_string = session_vec_end.join(", ");
+    let session_end_string = session_vec_end.join(",");
 
     let last_insert_id = create_session_in_database(&mut conn, user_id, game_id, campaign_id, session_start_string, session_end_string, player_string,
-    number_of_players, notes, winner, winner_name, session_picture_link);
+    number_of_players, notes, winner, winner_name, picture);
+   
     if last_insert_id.unwrap() > 0 {
         Ok(())
     } else {
@@ -209,7 +208,6 @@ pub fn get_list_of_sessions_persistence(
     campaign_title: Option<String>,
 ) -> Result<Vec<SessionDataConverted>, PersistenceError> {
     let mut conn = pool.get_conn()?;
-    //get number of players
     //get user_id
     let user_id = select_userid_by_userstring(&mut conn, username).unwrap();
     //get game_id
@@ -228,6 +226,7 @@ pub fn get_list_of_sessions_persistence(
         
         //split session_start string into a vector of strings
         let session_start_vec: Vec<&str> = SessionDataUnConverted.session_start.split(',').collect();
+
         //create NaiveDateTime object out of string
         let year = session_start_vec[0].parse::<i32>();
         let month = session_start_vec[1].parse::<u32>();
@@ -262,7 +261,7 @@ pub fn get_list_of_sessions_persistence(
             notes: SessionDataUnConverted.notes,
             winner: SessionDataUnConverted.winner,
             winner_name: SessionDataUnConverted.winner_name,
-            session_picture_link: SessionDataUnConverted.session_picture_link,
+            picture: SessionDataUnConverted.picture,
             number_of_players: SessionDataUnConverted.number_of_players
         };
         
@@ -274,3 +273,76 @@ pub fn get_list_of_sessions_persistence(
     
 }
 
+pub fn create_new_game_persistence(
+    pool: &mysql::Pool,
+    username: String,
+    game_title: String,
+    description: Option<String>,
+) -> Result<(), PersistenceError> {
+    let mut conn = pool.get_conn()?;
+    
+    //get user_id
+    let user_id = select_userid_by_userstring(&mut conn, username).unwrap();
+    
+    let last_insert_id = create_game_in_database(&mut conn, user_id, game_title, description);
+    if last_insert_id.unwrap() > 0 {
+        Ok(())
+    } else {
+        Err(PersistenceError::Unknown)
+    }
+    
+}
+
+pub fn create_new_campaign_persistence(
+    pool: &mysql::Pool,
+    username: String,
+    game_title: String,
+    campaign_title: String,
+    description: Option<String>,
+    notes: Option<String>
+) -> Result<(), PersistenceError> {
+    let mut conn = pool.get_conn()?;
+    
+    //get user_id
+    let user_id = select_userid_by_userstring(&mut conn, username).unwrap();
+    //get game_id
+    let game_id = select_gameid_by_gamestring(&mut conn, game_title).unwrap();
+    
+    let last_insert_id = create_campaign_in_database(&mut conn, user_id, game_id, campaign_title, description, notes);
+    if last_insert_id.unwrap() > 0 {
+        Ok(())
+    } else {
+        Err(PersistenceError::Unknown)
+    }
+    
+}
+
+
+pub fn get_list_of_games_persistence(
+    pool: &mysql::Pool,
+    username: String,
+) -> Result<Vec<GameInfo>, PersistenceError> {
+    let mut conn = pool.get_conn()?;
+    //get user_id
+    let user_id = select_userid_by_userstring(&mut conn, username).unwrap();
+    let games_vec = (get_list_of_games_queries(&mut conn, user_id)).unwrap();
+    //see using the struct declared for models when dealing with errors
+    Ok(games_vec)
+    
+}
+
+
+pub fn get_list_of_campaigns_persistence(
+    pool: &mysql::Pool,
+    username: String,
+    game_title: String
+) -> Result<Vec<CampaignInfo>, PersistenceError> {
+    let mut conn = pool.get_conn()?;
+    //get user_id
+    let user_id = select_userid_by_userstring(&mut conn, username).unwrap();
+    let game_id = select_gameid_by_gamestring(&mut conn, game_title).unwrap();
+    let campaigns_vec = (get_list_of_campaigns_queries(&mut conn, user_id, game_id)).unwrap();
+    //see using the struct declared for models when dealing with errors
+    Ok(campaigns_vec)
+    
+}
