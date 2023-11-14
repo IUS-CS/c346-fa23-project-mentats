@@ -48,6 +48,17 @@ pub(crate) async fn get_users(data: web::Data<mysql::Pool>) -> actix_web::Result
     Ok(web::Json(users))
 }
 
+// endpoint for getting all users
+#[get("/v1/user/{user_name}")]
+pub(crate) async fn get_single_user(
+    data: web::Data<mysql::Pool>,
+    path: web::Path<String>
+) -> actix_web::Result<impl Responder> {
+    let username: String = path.into_inner();
+    let user = web::block(move || get_single_user_persistence(&data, username)).await??;
+    Ok(web::Json(user))
+}
+
 //endpoint for loging in a user
 #[put("/v1/login")]
 pub(crate) async fn login(
@@ -62,7 +73,7 @@ pub(crate) async fn login(
     Ok(web::Json(user))
 }
 
-// endpoint for creating a new user
+// endpoint for updating a user profile
 #[post("/v1/users/profile")]
 pub(crate) async fn update_user_profile(
     web::Json(user_data): web::Json<UserUpdate>,

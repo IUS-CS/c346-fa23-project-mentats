@@ -26,6 +26,31 @@ pub struct UserData {
     pub last_name: String,
 }
 
+
+#[derive(Debug, Serialize, FromRow)]
+pub struct SingleUserUnconvertedResponseData {
+    //pub create_time: String,
+    pub email: String,
+    pub username: String,
+    pub first_name: Option<String>,
+    pub last_name: Option<String>,
+    pub pronouns: Option<String>,
+    pub bio: Option<String>,
+    pub profile_pic: Option<String>
+}
+
+#[derive(Debug, Serialize, PartialEq, Deserialize)]
+pub struct SingleUserConvertedResponseData {
+    //pub create_time: NaiveDateTime,
+    pub email: String,
+    pub username: String,
+    pub first_name: Option<String>,
+    pub last_name: Option<String>,
+    pub pronouns: Option<String>,
+    pub bio: Option<String>,
+    pub profile_pic: Option<String>
+}
+
 #[derive(Debug, Serialize)]
 pub struct UserResponseData {
     pub user_data: Vec<UserData>,
