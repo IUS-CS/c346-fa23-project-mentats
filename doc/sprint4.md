@@ -22,7 +22,7 @@ This sprint, we completed:
 Here are screenshots of what we did:
 
 ![Signup form](images/Homepage1.PNG)
-![Test Code](images/"Test Created".PNG)
+![Test Code](images/TestCreated.PNG)
 ## Retro
 
 [What is a Sprint Retrospective](https://www.scrum.org/resources/what-is-a-sprint-retrospective)
