@@ -63,6 +63,28 @@ pub fn select_password_by_username(conn: &mut mysql::PooledConn, username: Strin
     .map(|pass| pass.unwrap())
 }
 
+pub fn select_single_user(conn: &mut mysql::PooledConn, id: u64) -> mysql::error::Result<SingleUserUnconvertedResponseData> {
+    conn.exec_first(
+        "
+        SELECT email, username, first_name, last_name, pronouns, bio, profile_pic
+        FROM users
+        WHERE id = :id
+        ",
+        params! {
+            "id" => id
+        }
+        //|(email, username, first_name, last_name, pronouns, bio, profile_pic)| SingleUserUnconvertedResponseData {
+        //    email: email,
+        //    username: username,
+        //    first_name: first_name,
+        //    last_name: last_name,
+        //    pronouns: pronouns,
+        //    bio: bio,
+        //    profile_pic: profile_pic
+        //}
+    ).map(|single_user_response|single_user_response.unwrap())
+}
+
 pub fn select_user_by_id(
     conn: &mut mysql::PooledConn,
     username: String,
