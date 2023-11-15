@@ -21,7 +21,6 @@ This sprint, we completed:
 
 Here are screenshots of what we did:
 
-![Signup form](images/Homepage1.PNG)
 ![Test Code](images/TestCreated.PNG)
 ## Retro
 
