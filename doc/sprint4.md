@@ -13,9 +13,11 @@ Members present:
 
 This sprint, we completed:
 
-* A change to site navigation by adding a sidebar.
-* A redesign of the session log. 
-* A bugfix for an overflow bug when submitting a session log on Firefox.
+* New backend endpoints for querying users.
+* A backend endpoint for creating a session.
+* A suite of tests for the backend endpoints. 
+* A published project reflections file.
+
 
 Here are screenshots of what we did:
 
