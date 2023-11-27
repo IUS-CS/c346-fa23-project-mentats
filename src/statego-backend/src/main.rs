@@ -1,21 +1,20 @@
 /////////////////////////////////////////////
 /// main.rs
-/// 
+///
 /// handles loading environment variables
 /// handles setting up database connection
 /// handles staring the server
 /////////////////////////////////////////////
-
 use actix_web::{web, App, HttpServer};
 use std::io;
 
 // modules from other files in project
+mod config;
 mod models;
 mod persistence;
 mod queries;
 mod routes;
 mod test;
-mod config;
 
 #[actix_web::main]
 async fn main() -> io::Result<()> {
@@ -40,10 +39,11 @@ async fn main() -> io::Result<()> {
             .service(routes::get_list_of_games)
             .service(routes::get_list_of_campaigns)
             .service(routes::get_single_user)
+            .service(routes::delete_session)
+            .service(routes::get_single_session)
     })
     .bind(("127.0.0.1", 8080))?
     .workers(2)
     .run()
     .await
 }
-
