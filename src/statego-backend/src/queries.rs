@@ -1,12 +1,10 @@
 /////////////////////////////////////////////
+use crate::models::*;
 /// queeries.rs
-/// 
+///
 /// handles querying the mysql database
 /////////////////////////////////////////////
-
 use mysql::{params, prelude::*};
-use crate::models::*;
-
 
 pub fn insert_new_ueser(
     conn: &mut mysql::PooledConn,
@@ -49,7 +47,10 @@ pub fn select_all_users(conn: &mut mysql::PooledConn) -> mysql::error::Result<Ve
     )
 }
 
-pub fn select_password_by_username(conn: &mut mysql::PooledConn, username: String) -> mysql::error::Result<String> {
+pub fn select_password_by_username(
+    conn: &mut mysql::PooledConn,
+    username: String,
+) -> mysql::error::Result<String> {
     conn.exec_first(
         "
         SELECT pass
@@ -63,7 +64,10 @@ pub fn select_password_by_username(conn: &mut mysql::PooledConn, username: Strin
     .map(|pass| pass.unwrap())
 }
 
-pub fn select_single_user(conn: &mut mysql::PooledConn, id: u64) -> mysql::error::Result<SingleUserUnconvertedResponseData> {
+pub fn select_single_user(
+    conn: &mut mysql::PooledConn,
+    id: u64,
+) -> mysql::error::Result<SingleUserUnconvertedResponseData> {
     conn.exec_first(
         "
         SELECT email, username, first_name, last_name, pronouns, bio, profile_pic
@@ -72,17 +76,17 @@ pub fn select_single_user(conn: &mut mysql::PooledConn, id: u64) -> mysql::error
         ",
         params! {
             "id" => id
-        }
-        //|(email, username, first_name, last_name, pronouns, bio, profile_pic)| SingleUserUnconvertedResponseData {
-        //    email: email,
-        //    username: username,
-        //    first_name: first_name,
-        //    last_name: last_name,
-        //    pronouns: pronouns,
-        //    bio: bio,
-        //    profile_pic: profile_pic
-        //}
-    ).map(|single_user_response|single_user_response.unwrap())
+        }, //|(email, username, first_name, last_name, pronouns, bio, profile_pic)| SingleUserUnconvertedResponseData {
+           //    email: email,
+           //    username: username,
+           //    first_name: first_name,
+           //    last_name: last_name,
+           //    pronouns: pronouns,
+           //    bio: bio,
+           //    profile_pic: profile_pic
+           //}
+    )
+    .map(|single_user_response| single_user_response.unwrap())
 }
 
 pub fn select_user_by_id(
@@ -106,7 +110,7 @@ pub fn update_bio_and_profilepic(
     conn: &mut mysql::PooledConn,
     username: String,
     bio: String,
-    profile_pic: String 
+    profile_pic: String,
 ) -> mysql::error::Result<UserUpdateData> {
     conn.exec_drop(
         r"UPDATE users 
@@ -116,7 +120,7 @@ pub fn update_bio_and_profilepic(
             "bio" => bio,
             "profile_pic" => profile_pic,
             "username" => username.clone()
-        }
+        },
     );
     conn.exec_first(
         "
@@ -143,7 +147,7 @@ pub fn create_session_in_database(
     notes: Option<String>,
     winner: bool,
     winner_name: Option<String>,
-    picture: Option<String>
+    picture: Option<String>,
 ) -> mysql::error::Result<u64> {
     conn.exec_drop(
         "
@@ -169,7 +173,27 @@ pub fn create_session_in_database(
     .map(|_| conn.last_insert_id())
 }
 
-pub fn select_gameid_by_gamestring(conn: &mut mysql::PooledConn, game_name: String) -> mysql::error::Result<u64> {
+pub fn delete_session_in_database(
+    conn: &mut mysql::PooledConn,
+    session_id: u64,
+    is_deleted: bool
+) -> mysql::error::Result<u64> {
+        conn.exec_drop(
+            r"UPDATE session 
+            SET is_deleted = :is_deleted
+            WHERE session_id = :session_id",
+            params! {
+                "session_id" => session_id,
+                "is_deleted" => is_deleted
+            }
+        )
+        .map(|_| conn.affected_rows())
+}
+
+pub fn select_gameid_by_gamestring(
+    conn: &mut mysql::PooledConn,
+    game_name: String,
+) -> mysql::error::Result<u64> {
     conn.exec_first(
         "
         SELECT game_id
@@ -183,7 +207,27 @@ pub fn select_gameid_by_gamestring(conn: &mut mysql::PooledConn, game_name: Stri
     .map(|game_id| game_id.unwrap())
 }
 
-pub fn select_campaignid_by_campaignstring(conn: &mut mysql::PooledConn, campaign_name: Option<String>) -> mysql::error::Result<u64> {
+pub fn select_gamestring_by_gameid(
+    conn: &mut mysql::PooledConn,
+    game_id: u64,
+) -> mysql::error::Result<String> {
+    conn.exec_first(
+        "
+        SELECT game_name
+        FROM games
+        WHERE game_id = :game_id
+        ",
+        params! {
+            "game_id" => game_id
+        },
+    )
+    .map(|game_name| game_name.unwrap())
+}
+
+pub fn select_campaignid_by_campaignstring(
+    conn: &mut mysql::PooledConn,
+    campaign_name: Option<String>,
+) -> mysql::error::Result<u64> {
     conn.exec_first(
         "
         SELECT campaign_id
@@ -196,7 +240,27 @@ pub fn select_campaignid_by_campaignstring(conn: &mut mysql::PooledConn, campaig
     )
     .map(|campaign_id| campaign_id.unwrap())
 }
-pub fn select_userid_by_userstring(conn: &mut mysql::PooledConn, username: String) -> mysql::error::Result<u64> {
+
+pub fn select_campaignstring_by_campaignid(
+    conn: &mut mysql::PooledConn,
+    campaign_id: u64,
+) -> mysql::error::Result<String> {
+    conn.exec_first(
+        "
+        SELECT campaign_name
+        FROM campaign
+        WHERE campaign_id = :campaign_id
+        ",
+        params! {
+            "campaign_id" => campaign_id
+        },
+    )
+    .map(|campaign_id| campaign_id.unwrap())
+}
+pub fn select_userid_by_userstring(
+    conn: &mut mysql::PooledConn,
+    username: String,
+) -> mysql::error::Result<u64> {
     conn.exec_first(
         "
         SELECT id
@@ -210,17 +274,68 @@ pub fn select_userid_by_userstring(conn: &mut mysql::PooledConn, username: Strin
     .map(|user_id| user_id.unwrap())
 }
 
+pub fn select_userstring_by_userid(
+    conn: &mut mysql::PooledConn,
+    id: u64,
+) -> mysql::error::Result<String> {
+    conn.exec_first(
+        "
+        SELECT username
+        FROM users
+        WHERE id = :id
+        ",
+        params! {
+            "id" => id
+        },
+    )
+    .map(|username| username.unwrap())
+}
+
+
+
+pub fn get_single_session_query(
+    conn: &mut mysql::PooledConn,
+    session_id: u64,
+) -> mysql::error::Result<Vec<SessionDataUnConverted>> {
+    conn.exec_map(
+        "
+        SELECT session_id, user_id, game_id, campaign_id, session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
+        FROM session
+        WHERE session_id = :session_id
+        ",
+        params! {
+            "session_id" => session_id
+        }
+        ,
+        |(session_id, user_id, game_id, campaign_id, session_start, session_end, 
+            players, notes, winner, winner_name, picture, 
+            number_of_players)| SessionDataUnConverted {
+            session_id : session_id,
+            user_id : user_id,
+            game_id : game_id,
+            campaign_id : campaign_id,
+            session_start: session_start,
+            session_end: session_end,
+            players: players,
+            notes: notes,
+            winner: winner,
+            winner_name: winner_name,
+            picture: picture,
+            number_of_players: number_of_players
+        }
+    )
+}
 
 pub fn get_list_of_sessions_queries(
     conn: &mut mysql::PooledConn,
     user_id: u64,
     game_id: u64,
-    campaign_id: Option<u64>
+    campaign_id: Option<u64>,
 ) -> mysql::error::Result<Vec<SessionDataUnConverted>> {
-    if campaign_id.is_none(){
+    if campaign_id.is_none() {
         conn.exec_map(
             "
-            SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
+            SELECT session_id, user_id, game_id, campaign_id, session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
             FROM session
             WHERE user_id = :user_id AND game_id = :game_id AND campaign_id IS NULL
             ",
@@ -231,7 +346,13 @@ pub fn get_list_of_sessions_queries(
             }
             ,
 
-            |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
+            |(session_id, user_id, game_id, campaign_id, session_start, session_end, 
+                players, notes, winner, winner_name, picture, 
+                number_of_players)| SessionDataUnConverted {
+                session_id : session_id,
+                user_id : user_id,
+                game_id : game_id,
+                campaign_id : campaign_id,
                 session_start: session_start,
                 session_end: session_end,
                 players: players,
@@ -241,12 +362,11 @@ pub fn get_list_of_sessions_queries(
                 picture: picture,
                 number_of_players: number_of_players
             }
-        ) 
-    }
-    else{
+        )
+    } else {
         conn.exec_map(
             "
-            SELECT session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
+            SELECT session_id, user_id, game_id, campaign_id, session_start, session_end, players, notes, winner, winner_name, picture, number_of_players
             FROM session
             WHERE user_id = :user_id AND game_id = :game_id AND campaign_id = :campaign_id
             ",
@@ -257,7 +377,13 @@ pub fn get_list_of_sessions_queries(
             }
             ,
 
-            |(session_start, session_end, players, notes, winner, winner_name, picture, number_of_players)| SessionDataUnConverted {
+            |(session_id, user_id, game_id, campaign_id, session_start, session_end, 
+                players, notes, winner, winner_name, picture, 
+                number_of_players)| SessionDataUnConverted {
+                session_id : session_id,
+                user_id : user_id,
+                game_id : game_id,
+                campaign_id : campaign_id,
                 session_start: session_start,
                 session_end: session_end,
                 players: players,
@@ -267,15 +393,15 @@ pub fn get_list_of_sessions_queries(
                 picture: picture,
                 number_of_players: number_of_players
             }
-        ) 
-    }   
+        )
+    }
 }
 
 pub fn create_game_in_database(
     conn: &mut mysql::PooledConn,
     user_id: u64,
     game_name: String,
-    descr: Option<String>
+    descr: Option<String>,
 ) -> mysql::error::Result<u64> {
     conn.exec_drop(
         "
@@ -286,7 +412,7 @@ pub fn create_game_in_database(
             "user_id" => user_id,
             "game_name" => game_name,
             "descr" => descr,
-            
+
         },
     )
     .map(|_| conn.last_insert_id())
@@ -298,7 +424,7 @@ pub fn create_campaign_in_database(
     game_id: u64,
     campaign_name: String,
     descr: Option<String>,
-    notes: Option<String>
+    notes: Option<String>,
 ) -> mysql::error::Result<u64> {
     conn.exec_drop(
         "
@@ -311,7 +437,7 @@ pub fn create_campaign_in_database(
             "campaign_name" => campaign_name,
             "descr" => descr,
             "notes" => notes
-            
+
         },
     )
     .map(|_| conn.last_insert_id())
@@ -327,12 +453,10 @@ pub fn get_list_of_games_queries(
         ",
         params! {
             "user_id" => user_id
-        }
-        ,
-
+        },
         |(game_name, descr)| GameInfo {
             game_title: game_name,
-            description: descr
+            description: descr,
         },
     )
 }

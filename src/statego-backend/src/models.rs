@@ -1,12 +1,11 @@
 /////////////////////////////////////////////
+use chrono::NaiveDateTime;
 /// models.rs
-/// 
+///
 /// data models that map to the mysql queries
 /////////////////////////////////////////////
-
 use mysql::prelude::FromRow;
 use serde::{Deserialize, Serialize};
-use chrono::NaiveDateTime;
 
 #[derive(Debug, Deserialize)]
 pub struct UserDetails {
@@ -14,7 +13,7 @@ pub struct UserDetails {
     pub username: String,
     pub pass: String,
     pub first_name: String,
-    pub last_name: String
+    pub last_name: String,
 }
 
 #[derive(Debug, Serialize, FromRow)]
@@ -26,7 +25,6 @@ pub struct UserData {
     pub last_name: String,
 }
 
-
 #[derive(Debug, Serialize, FromRow)]
 pub struct SingleUserUnconvertedResponseData {
     //pub create_time: String,
@@ -36,7 +34,7 @@ pub struct SingleUserUnconvertedResponseData {
     pub last_name: Option<String>,
     pub pronouns: Option<String>,
     pub bio: Option<String>,
-    pub profile_pic: Option<String>
+    pub profile_pic: Option<String>,
 }
 
 #[derive(Debug, Serialize, PartialEq, Deserialize)]
@@ -48,7 +46,7 @@ pub struct SingleUserConvertedResponseData {
     pub last_name: Option<String>,
     pub pronouns: Option<String>,
     pub bio: Option<String>,
-    pub profile_pic: Option<String>
+    pub profile_pic: Option<String>,
 }
 
 #[derive(Debug, Serialize)]
@@ -76,7 +74,7 @@ pub struct UserUpdateData {
     pub profile_pic: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct Session {
     pub username: String,
     pub game_title: String,
@@ -89,12 +87,15 @@ pub struct Session {
     pub notes: Option<String>,
     pub winner: bool,
     pub winner_name: Option<String>,
-    pub picture: Option<String>
-
+    pub picture: Option<String>,
 }
 
 #[derive(Debug, Serialize)]
 pub struct SessionDataConverted {
+    pub session_id : u64,
+    pub user_name : String,
+    pub game_title : String,
+    pub campaign_title : Option<String>,
     #[serde(with = "my_date_format")]
     pub session_start: NaiveDateTime,
     #[serde(with = "my_date_format")]
@@ -104,12 +105,15 @@ pub struct SessionDataConverted {
     pub winner: bool,
     pub winner_name: Option<String>,
     pub picture: Option<String>,
-    pub number_of_players: i8
+    pub number_of_players: i8,
 }
-
 
 #[derive(Debug, Serialize, FromRow)]
 pub struct SessionDataUnConverted {
+    pub session_id : u64,
+    pub user_id : u64,
+    pub game_id : u64,
+    pub campaign_id : Option<u64>,
     pub session_start: String,
     pub session_end: String,
     pub players: String,
@@ -117,26 +121,26 @@ pub struct SessionDataUnConverted {
     pub winner: bool,
     pub winner_name: Option<String>,
     pub picture: Option<String>,
-    pub number_of_players: i8
+    pub number_of_players: i8,
 }
 
 #[derive(Debug, Serialize)]
 pub struct SessionResponseVec {
-    pub session_list: Vec<SessionDataConverted>
+    pub session_list: Vec<SessionDataConverted>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct SessionsFind {
     pub username: String,
     pub game_title: String,
-    pub campaign_title: Option<String>
+    pub campaign_title: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct NewGame {
     pub username: String,
     pub game_title: String,
-    pub description: Option<String>
+    pub description: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -145,7 +149,7 @@ pub struct NewCampaign {
     pub game_title: String,
     pub campaign_title: String,
     pub description: Option<String>,
-    pub notes: Option<String>
+    pub notes: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -156,7 +160,7 @@ pub struct GameFind {
 #[derive(Debug, Deserialize)]
 pub struct CampaignFind {
     pub username: String,
-    pub game_title: String
+    pub game_title: String,
 }
 
 #[derive(Debug, Serialize)]
@@ -170,20 +174,15 @@ pub struct GameInfo {
 pub struct CampaignInfo {
     pub campaign_title: String,
     pub description: Option<String>,
-    pub notes: Option<String>
+    pub notes: Option<String>,
 }
 
-
-mod my_date_format{
+mod my_date_format {
     use chrono::NaiveDateTime;
-    use serde::{self, Deserialize, Serializer, Deserializer};
-
+    use serde::{self, Deserialize, Deserializer, Serializer};
 
     const FORMAT: &'static str = "%Y-%m-%d %H:%M:%S";
-    pub fn serialize<S>(
-        date: &NaiveDateTime,
-        serializer: S,
-    ) -> Result<S::Ok, S::Error>
+    pub fn serialize<S>(date: &NaiveDateTime, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
@@ -191,9 +190,7 @@ mod my_date_format{
         serializer.serialize_str(&s)
     }
 
-    pub fn deserialize<'de, D>(
-        deserializer: D,
-    ) -> Result<NaiveDateTime, D::Error>
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<NaiveDateTime, D::Error>
     where
         D: Deserializer<'de>,
     {
@@ -202,6 +199,3 @@ mod my_date_format{
         Ok(dt)
     }
 }
-
-
-

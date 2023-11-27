@@ -1,18 +1,14 @@
 /////////////////////////////////////////////
 /// routes.rs
-/// 
+///
 /// maps functions to http requests
 /// handles converiting to and from json
 /// handles sending responses to client
 /////////////////////////////////////////////
-
-use actix_web::{get, post, put, web, HttpResponse, Responder};
+use actix_web::{delete, get, post, put, web, HttpResponse, Responder};
 
 // import models and functions from other files
-use crate::{
-    models::*,
-    persistence::*,
-};
+use crate::{models::*, persistence::*};
 
 // an example endpoint that just returns a string
 #[get("/")]
@@ -52,7 +48,7 @@ pub(crate) async fn get_users(data: web::Data<mysql::Pool>) -> actix_web::Result
 #[get("/v1/user/{user_name}")]
 pub(crate) async fn get_single_user(
     data: web::Data<mysql::Pool>,
-    path: web::Path<String>
+    path: web::Path<String>,
 ) -> actix_web::Result<impl Responder> {
     let username: String = path.into_inner();
     let user = web::block(move || get_single_user_persistence(&data, username)).await??;
@@ -84,8 +80,7 @@ pub(crate) async fn update_user_profile(
     let bio = user_data.bio.unwrap_or(String::from(" "));
     let profile_pic = user_data.profile_pic.unwrap_or(String::from(" "));
     // attempt to update
-    web::block(move || update_user(&data, username, bio, profile_pic))
-        .await??;
+    web::block(move || update_user(&data, username, bio, profile_pic)).await??;
 
     // return 204 status code on success
     Ok(HttpResponse::NoContent())
@@ -98,7 +93,7 @@ pub(crate) async fn create_session(
     data: web::Data<mysql::Pool>,
 ) -> actix_web::Result<impl Responder> {
     // extract data from json
-    
+
     let username = session_data.username;
     let game_title = session_data.game_title;
     let campaign_title = session_data.campaign_title;
@@ -110,14 +105,50 @@ pub(crate) async fn create_session(
     let winner_name = session_data.winner_name;
     let picture = session_data.picture;
     // attempt to create session
-    web::block(move || create_session_persistence(&data, username, game_title, campaign_title, session_start, session_end, players,
-        notes, winner, winner_name, picture))
-        .await??;
+    web::block(move || {
+        create_session_persistence(
+            &data,
+            username,
+            game_title,
+            campaign_title,
+            session_start,
+            session_end,
+            players,
+            notes,
+            winner,
+            winner_name,
+            picture,
+        )
+    })
+    .await??;
 
     // return 204 status code on success
     Ok(HttpResponse::NoContent())
 }
 
+// endpoint for deleting a session
+#[delete("/v1/users/session/{session_id}")]
+pub(crate) async fn delete_session(
+    data: web::Data<mysql::Pool>,
+    path: web::Path<String>
+) -> actix_web::Result<impl Responder> {
+    // extract data from json
+
+    let session_id_string: String = path.into_inner();
+    let session_id = session_id_string.parse::<u64>().unwrap_or(0);
+    
+    // attempt to delete session
+    web::block(move || {
+        delete_session_persistence(
+            &data,
+            session_id
+        )
+    })
+    .await??;
+
+    // return 204 status code on success
+    Ok(HttpResponse::NoContent())
+}
 
 // endpoint for getting a new session
 #[get("/v1/users/session")]
@@ -130,10 +161,32 @@ pub(crate) async fn get_list_of_sessions(
     let game_title = sessions_find.game_title;
     let campaign_title = sessions_find.campaign_title;
     // attempt to create session
-    let session_list = web::block(move || get_list_of_sessions_persistence(&data, username, game_title, campaign_title)).await??;
+    let session_list = web::block(move || {
+        get_list_of_sessions_persistence(&data, username, game_title, campaign_title)
+    })
+    .await??;
 
     // a list of sessions that match the game title and campaign title for a user
     Ok(web::Json(session_list))
+}
+
+
+// endpoint for getting a new session
+#[get("/v1/users/session/{session_id}")]
+pub(crate) async fn get_single_session(
+    data: web::Data<mysql::Pool>,
+    path: web::Path<String>
+) -> actix_web::Result<impl Responder> {
+    let session_id_string: String = path.into_inner();
+    let session_id = session_id_string.parse::<u64>().unwrap_or(0);
+    // attempt to create session
+    let single_session = web::block(move || {
+        get_single_session_persistence(&data, session_id)
+    })
+    .await??;
+
+    // a list of sessions that match the game title and campaign title for a user
+    Ok(web::Json(single_session))
 }
 
 // endpoint for creating a new game
@@ -143,7 +196,7 @@ pub(crate) async fn create_game(
     data: web::Data<mysql::Pool>,
 ) -> actix_web::Result<impl Responder> {
     // extract data from json
-    
+
     let username = new_game.username;
     let game_title = new_game.game_title;
     let description = new_game.description;
@@ -163,7 +216,7 @@ pub(crate) async fn create_campaign(
     data: web::Data<mysql::Pool>,
 ) -> actix_web::Result<impl Responder> {
     // extract data from json
-    
+
     let username = new_campaign.username;
     let game_title = new_campaign.game_title;
     let campaign_title = new_campaign.campaign_title;
@@ -171,15 +224,24 @@ pub(crate) async fn create_campaign(
     let notes = new_campaign.notes;
 
     // attempt to create session
-    web::block(move || create_new_campaign_persistence(&data, username, game_title, campaign_title, description, notes))
-        .await??;
+    web::block(move || {
+        create_new_campaign_persistence(
+            &data,
+            username,
+            game_title,
+            campaign_title,
+            description,
+            notes,
+        )
+    })
+    .await??;
 
     // return 204 status code on success
     Ok(HttpResponse::NoContent())
 }
 
- //endpoint for getting a list of games for a user
- //IMPLEMENT RETURNING A LIST OF CAMPAIGNS WITHIN EACH GAME VECTOR RETURNED
+//endpoint for getting a list of games for a user
+//IMPLEMENT RETURNING A LIST OF CAMPAIGNS WITHIN EACH GAME VECTOR RETURNED
 #[get("/v1/users/games")]
 pub(crate) async fn get_list_of_games(
     web::Json(games_find): web::Json<GameFind>,
@@ -191,21 +253,23 @@ pub(crate) async fn get_list_of_games(
     let games_list = web::block(move || get_list_of_games_persistence(&data, username)).await??;
 
     // a list of sessions that match the game title and campaign title for a user
-   Ok(web::Json(games_list))
+    Ok(web::Json(games_list))
 }
 
- //endpoint for getting a list of games for a user
- #[get("/v1/users/campaigns")]
- pub(crate) async fn get_list_of_campaigns(
-     web::Json(campaign_find): web::Json<CampaignFind>,
-     data: web::Data<mysql::Pool>,
- ) -> actix_web::Result<impl Responder> {
-     // extract data from json
-     let username = campaign_find.username;
-     let game_title = campaign_find.game_title;
-     // attempt to create session
-     let campaigns_list = web::block(move || get_list_of_campaigns_persistence(&data, username, game_title)).await??;
- 
-     // a list of sessions that match the game title and campaign title for a user
+//endpoint for getting a list of games for a user
+#[get("/v1/users/campaigns")]
+pub(crate) async fn get_list_of_campaigns(
+    web::Json(campaign_find): web::Json<CampaignFind>,
+    data: web::Data<mysql::Pool>,
+) -> actix_web::Result<impl Responder> {
+    // extract data from json
+    let username = campaign_find.username;
+    let game_title = campaign_find.game_title;
+    // attempt to create session
+    let campaigns_list =
+        web::block(move || get_list_of_campaigns_persistence(&data, username, game_title))
+            .await??;
+
+    // a list of sessions that match the game title and campaign title for a user
     Ok(web::Json(campaigns_list))
 }
