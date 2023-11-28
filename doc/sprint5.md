@@ -16,12 +16,11 @@ This sprint, we completed:
 * Updating testing.md with new tests.
 * Created a user dashboard.
 * Created an endpoint for deleting a session record from the database.
-* 
 
 
 Here are screenshots of what we did:
 
-![Test Code](images/TestCreated.PNG)
+![New Tests](images/GameCreateTest.PNG)
 ## Retro
 
 [What is a Sprint Retrospective](https://www.scrum.org/resources/what-is-a-sprint-retrospective)
