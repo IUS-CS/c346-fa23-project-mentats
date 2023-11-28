@@ -6,7 +6,7 @@
 /// handles sending responses to client
 /////////////////////////////////////////////
 
-use actix_web::{get, post, put, web, HttpResponse, Responder};
+use actix_web::{get, post, put, web, HttpResponse, Responder, delete};
 
 // import models and functions from other files
 use crate::{
@@ -208,4 +208,20 @@ pub(crate) async fn get_list_of_games(
  
      // a list of sessions that match the game title and campaign title for a user
     Ok(web::Json(campaigns_list))
+}
+//endpoint for deleting a user.
+#[delete("/v1/users")]
+pub(crate) async fn delete_user(
+    web::Json(user_data): web::Json<UserDetails>,
+    data: web::Data<mysql::Pool>,
+) -> actix_web::Result<impl Responder> {
+    // extract data from json
+    let username = user_data.username;
+
+    // attempt to delete user
+    web::block(move || delete_user_verify(&data))
+        .await??;
+
+    // return 204 status code on success
+    Ok(HttpResponse::NoContent())
 }

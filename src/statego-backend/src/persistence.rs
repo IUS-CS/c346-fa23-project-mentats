@@ -380,3 +380,8 @@ pub fn get_list_of_campaigns_persistence(
     Ok(campaigns_vec)
     
 }
+pub fn delete_user_verify(
+    pool: &mysql::Pool,
+
+);
+

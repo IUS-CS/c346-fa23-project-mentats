@@ -359,3 +359,39 @@ pub fn get_list_of_campaigns_queries(
         },
     )
 }
+//Deletes a user using their id and returns the info deleted.
+pub fn delete_user_by_id(
+    conn: &mut mysql::PooledConn,
+    id: String,
+    //Verify if error is correct.
+) -> mysql::error::Result<UserData> {
+    conn.exec_first(
+        "
+        DELETE
+        FROM users
+        WHERE id = :id
+        ",
+        params! {
+            "id" => id
+        },
+    )
+        .map(|user| user.unwrap())
+}
+//Deletes a user using their username and returns the info deleted.
+pub fn delete_user_by_username(
+    conn: &mut mysql::PooledConn,
+    username: String,
+    //Verify if error is correct.
+) -> mysql::error::Result<UserData> {
+    conn.exec_first(
+        "
+        DELETE
+        FROM users
+        WHERE username = :username
+        ",
+        params! {
+            "username" => username
+        },
+    )
+        .map(|user| user.unwrap())
+}
