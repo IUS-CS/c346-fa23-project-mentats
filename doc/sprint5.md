@@ -14,6 +14,9 @@ Members present:
 This sprint, we completed:
 
 * Updating testing.md with new tests.
+* Created a user dashboard.
+* Created an endpoint for deleting a session record from the database.
+* 
 
 
 Here are screenshots of what we did:
