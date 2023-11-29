@@ -1,14 +1,14 @@
 #[cfg(test)]
 mod tests {
-    use crate::models::*;
-    use crate::routes;
+    use crate::models::{campaign::*, game::*, session::*, user::*};
+    use crate::routes::{campaign::*, game::*, session::*, user::*};
     use actix_web::{test, web, App};
     use serde_json::json;
     use chrono::{NaiveDate, NaiveTime, NaiveDateTime};
 
     #[actix_rt::test]
     async fn a_test_hello_endpoint() {
-        let mut app = test::init_service(App::new().service(routes::hello)).await;
+        let mut app = test::init_service(App::new().service(hello)).await;
         let req = test::TestRequest::get().uri("/").to_request();
         let resp = test::call_service(&mut app, req).await;
 
@@ -43,9 +43,9 @@ mod tests {
         let mut app = test::init_service(
             App::new()
                 .app_data(shared_data.clone())
-                .service(routes::create_user)
-                .service(routes::update_user_profile)
-                .service(routes::get_single_user),
+                .service(create_user)
+                .service(update_user_profile)
+                .service(get_single_user),
         )
         .await;
         let mut req = test::TestRequest::post()
@@ -98,9 +98,9 @@ mod tests {
         let mut app = test::init_service(
             App::new()
                 .app_data(shared_data.clone())
-                .service(routes::create_game)
-                .service(routes::create_campaign)
-                .service(routes::create_session)
+                .service(create_game)
+                .service(create_campaign)
+                .service(create_session)
         )
         .await;
 

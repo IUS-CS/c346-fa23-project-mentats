@@ -7,73 +7,6 @@ use chrono::NaiveDateTime;
 use mysql::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize)]
-pub struct UserDetails {
-    pub email: String,
-    pub username: String,
-    pub pass: String,
-    pub first_name: String,
-    pub last_name: String,
-}
-
-#[derive(Debug, Serialize, FromRow)]
-pub struct UserData {
-    pub id: i32,
-    pub email: String,
-    pub username: String,
-    pub first_name: String,
-    pub last_name: String,
-}
-
-#[derive(Debug, Serialize, FromRow)]
-pub struct SingleUserUnconvertedResponseData {
-    //pub create_time: String,
-    pub email: String,
-    pub username: String,
-    pub first_name: Option<String>,
-    pub last_name: Option<String>,
-    pub pronouns: Option<String>,
-    pub bio: Option<String>,
-    pub profile_pic: Option<String>,
-}
-
-#[derive(Debug, Serialize, PartialEq, Deserialize)]
-pub struct SingleUserConvertedResponseData {
-    //pub create_time: NaiveDateTime,
-    pub email: String,
-    pub username: String,
-    pub first_name: Option<String>,
-    pub last_name: Option<String>,
-    pub pronouns: Option<String>,
-    pub bio: Option<String>,
-    pub profile_pic: Option<String>,
-}
-
-#[derive(Debug, Serialize)]
-pub struct UserResponseData {
-    pub user_data: Vec<UserData>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct UserCredentials {
-    pub username: String,
-    pub pass: String,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct UserUpdate {
-    pub username: String,
-    pub bio: Option<String>,
-    pub profile_pic: Option<String>,
-}
-
-#[derive(Debug, Serialize, FromRow)]
-pub struct UserUpdateData {
-    pub username: String,
-    pub bio: String,
-    pub profile_pic: String,
-}
-
 #[derive(Debug, Deserialize, Serialize)]
 pub struct Session {
     pub username: String,
@@ -136,46 +69,7 @@ pub struct SessionsFind {
     pub campaign_title: Option<String>,
 }
 
-#[derive(Debug, Deserialize)]
-pub struct NewGame {
-    pub username: String,
-    pub game_title: String,
-    pub description: Option<String>,
-}
 
-#[derive(Debug, Deserialize)]
-pub struct NewCampaign {
-    pub username: String,
-    pub game_title: String,
-    pub campaign_title: String,
-    pub description: Option<String>,
-    pub notes: Option<String>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct GameFind {
-    pub username: String,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct CampaignFind {
-    pub username: String,
-    pub game_title: String,
-}
-
-#[derive(Debug, Serialize)]
-pub struct GameInfo {
-    pub game_title: String,
-    pub description: Option<String>,
-    //pub campaign_list: Vec<CampaignInfo>
-}
-
-#[derive(Debug, Serialize)]
-pub struct CampaignInfo {
-    pub campaign_title: String,
-    pub description: Option<String>,
-    pub notes: Option<String>,
-}
 
 mod my_date_format {
     use chrono::NaiveDateTime;
@@ -199,3 +93,4 @@ mod my_date_format {
         Ok(dt)
     }
 }
+
