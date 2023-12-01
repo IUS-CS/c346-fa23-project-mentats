@@ -20,6 +20,7 @@ This sprint, we completed:
 
 Here are screenshots of what we did:
 
+![New Homepage](images/NewHomePage.PNG)
 ![New Tests](images/GameCreateTest.PNG)
 ## Retro
 
