@@ -382,6 +382,15 @@ pub fn get_list_of_campaigns_persistence(
 }
 pub fn delete_user_verify(
     pool: &mysql::Pool,
+    username: String,
+) -> Result<UserData, PersistenceError> {
+    let mut conn = pool.get_conn()?;
 
-);
+    if username.replace(' ', "").trim().is_empty() {
+        Err(PersistenceError::EmptyUsername)
+    } else {
+        Ok(delete_user_by_username(&mut conn, username)?)
+    }
+}
+
 

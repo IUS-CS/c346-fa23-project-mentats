@@ -367,9 +367,7 @@ pub fn delete_user_by_id(
 ) -> mysql::error::Result<UserData> {
     conn.exec_first(
         "
-        DELETE
-        FROM users
-        WHERE id = :id
+     UPDATE users SET is_deleted = 1 WHERE id = :id
         ",
         params! {
             "id" => id
@@ -385,9 +383,7 @@ pub fn delete_user_by_username(
 ) -> mysql::error::Result<UserData> {
     conn.exec_first(
         "
-        DELETE
-        FROM users
-        WHERE username = :username
+      UPDATE users SET is_deleted = 1 WHERE username = :username
         ",
         params! {
             "username" => username

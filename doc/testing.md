@@ -10,39 +10,14 @@ found in queries.rs and are shown below.
     pub fn select_password_by_username()
     pub fn select_user_by_id()
 
-Integration testing is done through setting up a predefined database, running each method for SQL queries, and 
-confirming the result. For the code below, after running this method we would confirm if all fields were received.
-
-    pub fn select_all_users(conn: &mut mysql::PooledConn) -> mysql::error::Result<Vec<UserData>> {
-    conn.query_map(
-    "
-    SELECT id, email, username, first_name, last_name
-    FROM users
-    ",
-    |(my_id, my_email, my_username, my_first_name, my_last_name)| UserData {
-    id: my_id,
-    email: my_email,
-    username: my_username,
-    first_name: my_first_name,
-    last_name: my_last_name,
-    }, 
-    )
-    }
-
-
 The persistence.rs 
 file includes error handling for the SQL queries listed. Error handling can be tested to see if the errors can be
 reproduced.
 
 The routes.rs file contains methods to respond to HTTP requests.The HTTP requests below are handled, put through 
-persistence.rs, and finally a response is received from the corresponding sql query. As with queries.rs, testing is done
-with a predefined database and is used to establish functionality and usability with other methods (such as error 
-handling.)
+persistence.rs, and finally a response is received from the corresponding sql query.
 
-
-
-
-        pub enum PersistenceError {
+    pub enum PersistenceError {
     EmptyEmail,
     EmptyUsername,
     EmptyPassword,
@@ -52,7 +27,9 @@ handling.)
     Unknown,
     }
 
-    
+Integration testing is contained within test.rs, tests for individual database queries as well as
+
+
 ## Future Testing.
 Testing considered for this and future sprints includes individual unit tests. Rust has a built-in testing framework for
 testing individual methods. With testing SQL queries comes the need for a mock database, one that allows testing every 
