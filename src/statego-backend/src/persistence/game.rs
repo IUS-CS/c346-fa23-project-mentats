@@ -23,6 +23,24 @@ pub fn create_new_game_persistence(
     }
 }
 
+pub fn delete_game_persistence(
+    pool: &mysql::Pool,
+    game_id: u64
+) -> Result<(), PersistenceError> {
+    let mut conn = pool.get_conn()?;
+    
+    let affected_rows = delete_game_in_database(
+        &mut conn,
+        game_id
+    );
+
+    if affected_rows.unwrap() > 0 {
+        Ok(())
+    } else {
+        Err(PersistenceError::Unknown)
+    }
+}
+
 
 
 pub fn get_single_game_persistence(

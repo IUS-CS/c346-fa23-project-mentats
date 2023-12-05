@@ -46,6 +46,7 @@ async fn main() -> io::Result<()> {
             .service(routes::campaign::get_single_campaign)
             .service(routes::campaign::get_list_of_campaigns)
             .service(routes::campaign::delete_campaign)
+            .service(routes::game::delete_game)
             
             
             
