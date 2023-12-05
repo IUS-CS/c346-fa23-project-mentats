@@ -165,3 +165,31 @@ pub fn select_userstring_by_userid(
     )
     .map(|username| username.unwrap())
 }
+pub fn delete_user_by_id(
+    conn: &mut mysql::PooledConn,
+    id: u64
+) -> mysql::error::Result<u64> {
+    conn.exec_drop(
+        r"UPDATE users
+            SET is_deleted = 1
+            WHERE id = id",
+        params! {
+                "id" => id,
+            }
+    )
+        .map(|user_id| user_id.unwrap())
+}
+pub fn delete_user_by_username(
+    conn: &mut mysql::PooledConn,
+    id: u64
+) -> mysql::error::Result<u64> {
+    conn.exec_drop(
+        r"UPDATE users
+            SET is_deleted = 1
+            WHERE username = :username",
+        params! {
+                "username" => username
+            }
+    )
+        .map(|username| username.unwrap())
+}
