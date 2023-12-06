@@ -23,7 +23,7 @@ pub struct Session {
     pub picture: Option<String>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct SessionDataConverted {
     pub session_id : u64,
     pub user_name : String,
@@ -41,7 +41,7 @@ pub struct SessionDataConverted {
     pub number_of_players: i8,
 }
 
-#[derive(Debug, Serialize, FromRow)]
+#[derive(Debug, Serialize, FromRow, Deserialize)]
 pub struct SessionDataUnConverted {
     pub session_id : u64,
     pub user_id : u64,
@@ -57,12 +57,12 @@ pub struct SessionDataUnConverted {
     pub number_of_players: i8,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct SessionResponseVec {
     pub session_list: Vec<SessionDataConverted>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct SessionsFind {
     pub username: String,
     pub game_title: String,

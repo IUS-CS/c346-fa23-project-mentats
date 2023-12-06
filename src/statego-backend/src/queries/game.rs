@@ -94,3 +94,36 @@ pub fn get_list_of_games_queries(
         },
     )
 }
+
+pub fn delete_game_in_database(
+    conn: &mut mysql::PooledConn,
+    game_id: u64,
+) -> mysql::error::Result<u64> {
+        let game_update = conn.exec_drop(
+            r"UPDATE games
+            SET is_deleted = 1
+            WHERE game_id = :game_id",
+            params! {
+                "game_id" => game_id
+            }
+        )
+        .map(|_| conn.affected_rows());
+        let campaign_update = conn.exec_drop(
+            r"UPDATE campaign
+            SET is_deleted = 1
+            WHERE game_id = :game_id",
+            params! {
+                "game_id" => game_id
+            }
+        )
+        .map(|_| conn.affected_rows());
+        conn.exec_drop(
+            r"UPDATE session
+            SET is_deleted = 1
+            WHERE game_id = :game_id",
+            params! {
+                "game_id" => game_id
+            }
+        )
+        .map(|_| conn.affected_rows() +game_update.unwrap()+campaign_update.unwrap())
+}

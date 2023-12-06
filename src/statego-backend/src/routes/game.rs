@@ -24,6 +24,26 @@ pub(crate) async fn create_game(
     Ok(HttpResponse::NoContent())
 }
 
+// endpoint for deleting a game and all associated sessions
+#[delete("/v1/users/game/{game_id}")]
+pub(crate) async fn delete_game(
+    data: web::Data<mysql::Pool>,
+    path: web::Path<String>
+) -> actix_web::Result<impl Responder> {
+    let game_id_string: String = path.into_inner();
+    let game_id = game_id_string.parse::<u64>().unwrap_or(0);
+    web::block(move || {
+        delete_game_persistence(
+            &data,
+            game_id
+        )
+    })
+    .await??;
+
+    // return 204 status code on success
+    Ok(HttpResponse::NoContent())
+}
+
 // endpoint for getting a single game via id
 #[get("/v1/users/game/{game_id}")]
 pub(crate) async fn get_single_game(
